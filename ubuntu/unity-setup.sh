@@ -11,7 +11,7 @@ sudo apt-get dist-upgrade -y
 echo ""
 echo "Installing curl, htop, zsh, terminator, unity-tweak-tool"
 echo ""
-sudo apt-get install curl htop zsh unity-tweak-tool terminator -y
+sudo apt-get install curl htop zsh terminator apt-transport-https ca-certificates unity-tweak-tool -y
 gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'
 
 echo ""
@@ -105,6 +105,19 @@ tar -xvzf godeb-amd64.tar.gz
 sudo mv godeb /usr/bin/
 godeb install 1.6.2
 mkdir -p ~/Projects/gocode
+
+echo ""
+echo "Installing Docker"
+echo ""
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' | sudo tee --append /etc/apt/sources.list.d/docker.list
+sudo apt-get update
+sudo apt-get install linux-image-extra-$(uname -r)
+sudo apt-get install docker-engine
+
+sudo groupadd docker
+sudo usermod -aG docker $(whoami)
+sudo systemctl enable docker
 
 echo ""
 echo "Cleaning up"
