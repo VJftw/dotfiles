@@ -9,9 +9,9 @@ sudo apt-get update -y
 sudo apt-get dist-upgrade -y
 
 echo ""
-echo "Installing curl, htop, zsh, terminator, unity-tweak-tool"
+echo "Installing curl, htop, zsh, terminator, gnome-tweak-tool"
 echo ""
-sudo apt-get install curl htop zsh terminator apt-transport-https ca-certificates unity-tweak-tool -y
+sudo apt-get install curl htop zsh terminator apt-transport-https ca-certificates gnome-tweak-tool -y
 gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'
 
 echo ""
