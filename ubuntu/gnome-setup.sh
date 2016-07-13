@@ -5,6 +5,9 @@ cd /temp
 # Update system
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/update-system.sh)
 
+# Liquorix Kernel
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/liquorix.sh)
+
 # Base
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/base.sh)
 
