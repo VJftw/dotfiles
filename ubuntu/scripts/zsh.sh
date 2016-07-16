@@ -3,7 +3,7 @@
 echo ""
 echo "Installing zsh antigen"
 echo ""
-sudo apt-get install zsh
+sudo apt-get install -y zsh
 git clone --depth 1 https://github.com/zsh-users/antigen.git ~/.antigen
 # Download .zshrc
 curl -L https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/.zshrc -o ~/.zshrc
