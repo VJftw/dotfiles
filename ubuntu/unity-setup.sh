@@ -3,6 +3,9 @@
 # Update system
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/update-system.sh)
 
+# Git
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/git.sh)
+
 # Base
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/base.sh)
 
@@ -12,9 +15,6 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # GTK Theme
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/gtk-theme.sh)
 gsettings set com.canonical.Unity.Launcher launcher-position Bottom
-
-# Git
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/git.sh)
 
 # ZSH
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/zsh.sh)
