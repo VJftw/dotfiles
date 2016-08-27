@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /tmp/
+
 # Update system
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/update-system.sh)
 
@@ -45,4 +47,4 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 echo ""
 echo "Cleaning up"
 echo ""
-sudo rm -rf /temp/*
+sudo rm -rf /tmp/*
