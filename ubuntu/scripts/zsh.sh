@@ -22,3 +22,5 @@ echo ""
 echo "Setting ZSH as shell"
 echo ""
 sudo chsh -s /usr/bin/zsh $(whoami)
+
+zsh > /dev/null &
