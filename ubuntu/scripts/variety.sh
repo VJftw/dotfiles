@@ -10,4 +10,4 @@ mkdir -p ~/.config/variety
 curl -L https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/.config/variety/variety.conf -o ~/.config/variety/variety.conf
 
 echo "Starting Variety..."
-variety &
+variety > /dev/null &
