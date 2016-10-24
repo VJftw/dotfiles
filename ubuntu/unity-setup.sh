@@ -44,6 +44,9 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # Invoke
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/invoke.sh)
 
+# Unity Tweak Tool
+sudo apt-get -f install -y unity-tweak-tool
+
 echo ""
 echo "Cleaning up"
 echo ""
