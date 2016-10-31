@@ -1,12 +1,9 @@
 #!/bin/bash
 
-cd /temp
+cd /tmp/
 
 # Update system
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/update-system.sh)
-
-# Liquorix Kernel
-#bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/liquorix.sh)
 
 # Base
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/base.sh)
@@ -20,13 +17,14 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # Git
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/git.sh)
 
+# Docker
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/docker.sh)
+
+# Invoke
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/invoke.sh)
+
 # ZSH
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/zsh.sh)
-
-echo ""
-echo "Creating Projects dir"
-echo ""
-mkdir -p ~/Projects
 
 # Google Chrome
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/google-chrome.sh)
@@ -34,19 +32,21 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # Atom
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/atom.sh)
 
-# RVM and NVM
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/rvm-nvm.sh)
+# nvm
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/nvm.sh)
 
 # GoDeb
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/godeb.sh)
 
-# Docker
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/docker.sh)
+# Unity Tweak Tool
+sudo apt-get -f install -y gnome-tweak-tool
 
-# Invoke
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/invoke.sh)
+echo ""
+echo "Creating Projects dir"
+echo ""
+mkdir -p ~/Projects
 
 echo ""
 echo "Cleaning up"
 echo ""
-sudo rm -rf /temp/*
+sudo rm -rf /tmp/*
