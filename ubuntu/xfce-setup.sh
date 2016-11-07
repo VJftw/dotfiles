@@ -25,6 +25,9 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # Atom
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/atom.sh)
 
+# JetBrains IDEA Ultimate
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/jetbrains-idea-iu.sh)
+
 # GoDeb
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/godeb.sh)
 
@@ -45,6 +48,9 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 
 # GTK
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/gtk-theme.sh)
+
+# Wallpapers
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/wallpapers.sh)
 
 # Synapse
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/synapse.sh)
