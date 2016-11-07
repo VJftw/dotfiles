@@ -13,6 +13,13 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 
 # GTK Theme
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/gtk-theme.sh)
+echo ""
+echo "Setting Adapta and Paper GTK 3 theme parts"
+echo ""
+gsettings set org.gnome.desktop.interface gtk-theme "Adapta"
+gsettings set org.gnome.desktop.wm.preferences theme "Adapta"
+gsettings set org.gnome.desktop.interface icon-theme "Paper"
+gsettings set org.gnome.desktop.interface cursor-theme "Paper"
 
 # Git
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/git.sh)

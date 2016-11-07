@@ -21,12 +21,6 @@ antigen theme https://gist.github.com/3750104.git agnoster
 # Tell antigen that you're done.
 antigen apply
 
-# export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-# [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
 export GOPATH="$HOME/Projects/gocode"
 export PATH="$PATH:$GOPATH/bin"
 

@@ -11,20 +11,6 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # Base
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/base.sh)
 
-# Variety
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/variety.sh)
-
-# GTK Theme
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/gtk-theme.sh)
-gsettings set com.canonical.Unity.Launcher launcher-position Bottom
-echo ""
-echo "Setting Adapta and Paper GTK 3 theme parts"
-echo ""
-gsettings set org.gnome.desktop.interface gtk-theme "Adapta"
-gsettings set org.gnome.desktop.wm.preferences theme "Adapta"
-gsettings set org.gnome.desktop.interface icon-theme "Paper"
-gsettings set org.gnome.desktop.interface cursor-theme "Paper"
-
 # ZSH
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/zsh.sh)
 
@@ -39,9 +25,6 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # Atom
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/atom.sh)
 
-# RVM and NVM
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/rvm-nvm.sh)
-
 # GoDeb
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/godeb.sh)
 
@@ -50,9 +33,6 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 
 # Invoke
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/invoke.sh)
-
-# Unity Tweak Tool
-sudo apt-get -f install -y unity-tweak-tool
 
 echo ""
 echo "Cleaning up"
