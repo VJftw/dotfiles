@@ -2,6 +2,11 @@
 
 ## Ubuntu 16.04
 
+### XFCE 4
+```
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/xfce-setup.sh)
+```
+
 ### Gnome
 ```
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/gnome-setup.sh)

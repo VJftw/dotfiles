@@ -8,7 +8,6 @@ antigen bundle git
 antigen bundle git-flow
 antigen bundle pip
 antigen bundle command-not-found
-antigen bundle gem
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting

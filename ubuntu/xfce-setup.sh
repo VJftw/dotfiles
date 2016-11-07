@@ -34,6 +34,29 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # Invoke
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/invoke.sh)
 
+# Slack
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/slack.sh)
+
+# Insync
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/insync.sh)
+
+# Steam
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/steam.sh)
+
+# GTK
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/gtk-theme.sh)
+
+# Synapse
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/synapse.sh)
+
+# Plank
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/plank.sh)
+
+# Download XFCE4 configuration
+curl -L https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml -o ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+curl -L https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml -o ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+curl -L https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/.config/xfce4/helpers.rc -o ~/.config/xfce4/xfconf/helpers.rc
+
 echo ""
 echo "Cleaning up"
 echo ""
