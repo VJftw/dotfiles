@@ -20,6 +20,7 @@ antigen bundle rimraf/k
 
 # Load the theme.
 # antigen theme https://gist.github.com/3750104.git agnoster
+POWERLEVEL9K_INSTALLATION_PATH=~/.antigen/bundles/bhilburn/powerlevel9k
 antigen theme bhilburn/powerlevel9k powerlevel9k
 POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
