@@ -3,12 +3,24 @@
 echo ""
 echo "Installing Docker"
 echo ""
-sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' | sudo tee --append /etc/apt/sources.list.d/docker.list
-sudo apt-get update
-sudo apt-get install linux-image-extra-$(uname -r) -y
-sudo apt-get install docker-engine -y
 
-sudo groupadd docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   zesty \
+   stable"
+
+sudo apt-get update -y
+sudo apt-get install docker-ce -y
+
 sudo usermod -aG docker $(whoami)
 sudo systemctl enable docker
+
+sudo systemctl stop docker
+sudo /bin/bash -c 'cat > /etc/docker/daemon.json' << EOF
+{
+  "storage-driver": "overlay2"
+}
+EOF
+sudo systemctl start docker

@@ -8,16 +8,16 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # Base
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/base.sh)
 
-# Variety
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/variety.sh)
+# Tilix
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/tilix.sh)
 
 # GTK Theme
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/gtk-theme.sh)
 echo ""
-echo "Setting Adapta and Paper GTK 3 theme parts"
+echo "Setting United Gnome and Paper GTK 3 theme parts"
 echo ""
-gsettings set org.gnome.desktop.interface gtk-theme "Adapta"
-gsettings set org.gnome.desktop.wm.preferences theme "Adapta"
+gsettings set org.gnome.desktop.interface gtk-theme "United-Ubuntu-Dark-Compact"
+gsettings set org.gnome.desktop.wm.preferences theme "United-Ubuntu-Dark-Compact"
 gsettings set org.gnome.desktop.interface icon-theme "Paper"
 gsettings set org.gnome.desktop.interface cursor-theme "Paper"
 
@@ -27,25 +27,22 @@ bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master
 # Docker
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/docker.sh)
 
-# Invoke
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/invoke.sh)
-
 # ZSH
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/zsh.sh)
 
 # Google Chrome
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/google-chrome.sh)
 
-# Atom
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/atom.sh)
-
-# nvm
-bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/nvm.sh)
+# VSCode
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/vscode.sh)
 
 # GoDeb
 bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/godeb.sh)
 
-# Unity Tweak Tool
+# Slack
+bash <(curl -s https://raw.githubusercontent.com/VJftw/workspace-settings/master/ubuntu/scripts/slack.sh)
+
+# Gnome Tweak Tool
 sudo apt-get -f install -y gnome-tweak-tool
 
 echo ""
