@@ -33,6 +33,6 @@ DEFAULT_USER=$(whoami)
 antigen apply
 
 export GOPATH="$HOME/Projects/gocode"
-export PATH="$PATH:$GOPATH/bin"
+export PATH="$PATH:$GOPATH/bin:$HOME/.bin:$HOME/.local/bin"
 export EDITOR=vim
 
