@@ -1,0 +1,68 @@
+---
+- name: Set "{{ target_user }}" default shell to zsh
+  become: yes
+  user:
+    name: "{{ target_user }}"
+    shell: /usr/bin/zsh
+
+
+- name: Get user information
+  getent:
+    database: passwd
+    key: "{{ target_user }}"
+    split: ":"
+
+- name: Install antigen
+  become: "{{ target_user }}"
+  git:
+    repo: 'https://github.com/zsh-users/antigen.git'
+    dest: "{{ getent_passwd[target_user][4] }}/.antigen"
+    version: v2.2.3
+
+- name: ensure .zshrc
+  become: "{{ target_user }}"  
+  file:
+    path: "{{ getent_passwd[target_user][4] }}/.zshrc"
+    state: touch
+    mode: 0644
+
+- name: .zshrc sources .profile
+  become: "{{ target_user }}"
+  blockinfile:
+    path: "{{ getent_passwd[target_user][4] }}/.zshrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - bashrc"
+    insertbefore: BOF
+    block: |
+      source "${HOME}/.profile"
+
+- name: Configure antigen
+  become: "{{ target_user }}"
+  blockinfile:
+    path: "{{ getent_passwd[target_user][4] }}/.zshrc"
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - antigen"
+    block: |
+      source ~/.antigen/antigen.zsh
+      # Load the oh-my-zsh's library.
+      antigen use oh-my-zsh
+      # Bundles from the default repo (robbyrussell's oh-my-zsh).
+      antigen bundle git
+      antigen bundle git-flow
+      antigen bundle pip
+      antigen bundle command-not-found
+      # Syntax highlighting bundle.
+      antigen bundle zsh-users/zsh-syntax-highlighting
+      antigen bundle zsh-users/zsh-completions
+      antigen bundle rimraf/k
+      # Load the theme.
+      POWERLEVEL9K_INSTALLATION_PATH=~/.antigen/bundles/bhilburn/powerlevel9k
+      antigen theme bhilburn/powerlevel9k powerlevel9k
+      POWERLEVEL9K_MODE='awesome-fontconfig'
+      POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+      POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+      POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
+      DEFAULT_USER=$(whoami)
+      # Tell antigen that you're done.
+      antigen apply
+
+

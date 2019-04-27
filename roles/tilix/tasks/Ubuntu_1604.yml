@@ -1,0 +1,9 @@
+---
+# tasks file for tilix
+- apt_repository:
+    repo: ppa:webupd8team/terminix
+
+- apt:
+    update_cache: yes
+    name: tilix
+  become: true

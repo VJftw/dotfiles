@@ -1,0 +1,19 @@
+---
+# tasks file for base-packages
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Install base packages
+  become: true
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - vim
+    - curl
+    - htop
+    - iotop
+    - nmap

@@ -1,0 +1,14 @@
+---
+# tasks file for tilix
+- include_tasks: Ubuntu_1604.yml
+  when: ansible_facts['distribution_major_version'] == "16.04"
+
+- apt:
+    name: tilix
+  become: true
+  when: ansible_facts['distribution_major_version'] != "16.04"
+
+- apt:
+    name: tilix
+  become: true
+  when: ansible_facts['distribution_major_version'] == "16.04"

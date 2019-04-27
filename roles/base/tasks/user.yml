@@ -1,0 +1,15 @@
+---
+- name: Get user information
+  getent:
+    database: passwd
+    key: "{{ target_user }}"
+    split: ":"
+
+- name: Configure default editor
+  become: "{{ target_user }}"
+  blockinfile:
+    path: "{{ getent_passwd[target_user][4] }}/.profile"
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - editor"
+    block: |
+      export EDITOR=vim

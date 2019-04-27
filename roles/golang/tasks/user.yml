@@ -1,0 +1,22 @@
+---
+- name: Get user information
+  getent:
+    database: passwd
+    key: "{{ target_user }}"
+    split: ":"
+
+- name: Create Golang workspace
+  become: "{{ target_user }}"
+  file:
+    path: "{{ getent_passwd[target_user][4] }}/Projects/gocode"
+    state: directory
+
+- name: Configure Path for Golang
+  become: "{{ target_user }}"
+  blockinfile:
+    path: "{{ getent_passwd[target_user][4] }}/.profile"
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - editor"
+    block: |
+      export GOPATH="$HOME/Projects/gocode"
+      export PATH="$PATH:$GOPATH/bin:$HOME/.bin:$HOME/.local/bin"

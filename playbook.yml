@@ -1,0 +1,16 @@
+- hosts: all
+  vars:
+    target_user: vjftw
+  tasks:
+  - name: User
+    debug:
+      var: target_user
+  roles:
+    # - base
+    # - zsh
+    - golang
+    # - geerlingguy.git
+    # - tilix
+    # - geerlingguy.docker
+    # - pixelart.chrome
+    # - ngetchell.vscode

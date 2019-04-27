@@ -1,0 +1,20 @@
+---
+- include_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure psutil modules are installed
+  pip:
+    name: psutil
+    extra_args: "--user"
+
+# gsettings set org.gnome.desktop.default-applications.terminal exec 'tilix'
+- name: Configure default terminal
+  command: gsettings set org.gnome.desktop.default-applications.terminal exec 'tilix'
+
+# - name: Configure default terminal
+#   dconf:
+#     key: "/org/gnome/desktop/applications/terminal"
+#     value: "tilix"
+#     state: present
+
+# Install terminal fonts

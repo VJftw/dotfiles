@@ -1,0 +1,9 @@
+---
+# tasks file for zsh
+
+- include_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Setup User
+  include_tasks: user.yml
+  when: target_user != ""
