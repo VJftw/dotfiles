@@ -1,0 +1,5 @@
+---
+- name: Install dependencies
+  apt:
+    name:
+    - gnome-tweak-tool

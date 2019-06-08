@@ -1,44 +1,52 @@
 ---
-- name: Set "{{ target_user }}" default shell to zsh
+- name: Set default shell to zsh
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
   become: yes
   user:
-    name: "{{ target_user }}"
+    name: "{{ item.name }}"
     shell: /usr/bin/zsh
 
-
-- name: Get user information
-  getent:
-    database: passwd
-    key: "{{ target_user }}"
-    split: ":"
-
 - name: Install antigen
-  become: "{{ target_user }}"
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: "{{ item.name }}"
   git:
     repo: 'https://github.com/zsh-users/antigen.git'
-    dest: "{{ getent_passwd[target_user][4] }}/.antigen"
+    dest: "~/.antigen"
     version: v2.2.3
 
 - name: ensure .zshrc
-  become: "{{ target_user }}"  
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: "{{ item.name }}"
   file:
-    path: "{{ getent_passwd[target_user][4] }}/.zshrc"
-    state: touch
+    path: "~/.zshrc"
+    state: file
     mode: 0644
 
 - name: .zshrc sources .profile
-  become: "{{ target_user }}"
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: "{{ item.name }}"
   blockinfile:
-    path: "{{ getent_passwd[target_user][4] }}/.zshrc"
+    path: "~/.zshrc"
     marker: "# {mark} ANSIBLE MANAGED BLOCK - bashrc"
     insertbefore: BOF
     block: |
       source "${HOME}/.profile"
 
 - name: Configure antigen
-  become: "{{ target_user }}"
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: "{{ item.name }}"
   blockinfile:
-    path: "{{ getent_passwd[target_user][4] }}/.zshrc"
+    path: "~/.zshrc"
     insertafter: EOF
     marker: "# {mark} ANSIBLE MANAGED BLOCK - antigen"
     block: |

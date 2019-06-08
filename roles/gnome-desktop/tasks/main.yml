@@ -1,7 +1,8 @@
 ---
+# tasks file for gnome-desktop
 - include_tasks: Debian.yml
   when: ansible_os_family == 'Debian'
 
 - name: Setup User
   include_tasks: user.yml
-  when: target_user != ""
+  when: users is defined and (users|length>0)

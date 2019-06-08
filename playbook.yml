@@ -1,16 +1,20 @@
 - hosts: all
-  vars:
-    target_user: vjftw
-  tasks:
-  - name: User
-    debug:
-      var: target_user
+  vars_files:
+    - vjftw.vars.yml
   roles:
-    # - base
-    # - zsh
-    - golang
-    # - geerlingguy.git
-    # - tilix
-    # - geerlingguy.docker
-    # - pixelart.chrome
-    # - ngetchell.vscode
+    - base
+    - nerd-fonts
+    - tilix
+    - git
+    - name: geerlingguy.docker
+      become: yes
+    - name: ngetchell.vscode
+      become: yes
+    - name: pixelart.chrome
+      become: yes
+    - zsh
+    - asdf
+    # - slack
+    # - discord
+    # - insync
+    - gnome-desktop

@@ -1,5 +1,10 @@
 ---
 # tasks file for base-packages
+- name: Install aptitude
+  become: yes
+  package:
+    name: aptitude
+
 - name: Update and upgrade apt packages
   become: true
   apt:

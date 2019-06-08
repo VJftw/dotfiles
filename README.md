@@ -30,3 +30,16 @@ curl -L https://raw.githubusercontent.com/VJftw/workspace-settings/master/script
 ```
 source ~/.scripts/export-aws-credentials.sh ~/Downloads/accessKeys.csv
 ```
+
+## Ansible
+
+```
+sudo add-apt-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install -y ansible curl unzip
+curl -LO https://github.com/VJftw/workspace-settings/archive/master.zip
+unzip master.zip
+cd workspace-settings-master/
+ansible-galaxy install -r requirements.yml
+ansible-playbook playbook.yml
+```

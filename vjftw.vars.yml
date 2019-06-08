@@ -1,0 +1,76 @@
+---
+
+users:
+- name: vjftw
+  git:
+    config:
+      global:
+        core:
+          editor: vim
+        user:
+          name: VJ Patel
+          email: vj@vjpatel.me
+          signingkey: 8FBF5FF4E34C3A9A
+      extra:
+      - path: ~/Projects/***REMOVED***
+        user:
+          name: Vijendra Patel
+          email: ***REMOVED***
+
+asdf_plugins:
+  consul: https://github.com/Banno/asdf-hashicorp.git
+  nomad: https://github.com/Banno/asdf-hashicorp.git
+  packer: https://github.com/Banno/asdf-hashicorp.git
+  serf: https://github.com/Banno/asdf-hashicorp.git
+  terraform: https://github.com/Banno/asdf-hashicorp.git
+  vault: https://github.com/Banno/asdf-hashicorp.git
+  elixir: https://github.com/asdf-vm/asdf-elixir.git
+  erlang: https://github.com/asdf-vm/asdf-erlang.git
+  golang: https://github.com/kennyp/asdf-golang.git
+  nodejs: https://github.com/asdf-vm/asdf-nodejs.git
+  python: https://github.com/danhper/asdf-python.git
+  ruby: https://github.com/asdf-vm/asdf-ruby.git
+  minikube: https://github.com/alvarobp/asdf-minikube.git
+
+tilix_dconf:
+  profiles/default/foreground-color: "'#A1B0B8'"
+  profiles/default/visible-name: "'Default'"
+  profiles/default/palette: !!str "['#252525', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5', '#708284', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5']"
+  profiles/default/badge-color-set: "false"
+  profiles/default/cursor-shape: "'ibeam'"
+  profiles/default/cursor-colors-set: "false"
+  profiles/default/highlight-colors-set: "true"
+  profiles/default/use-system-font: "false"
+  profiles/default/bold-color-set: "false"
+  profiles/default/font: "'Monofur Nerd Font 12'"
+  profiles/default/terminal-bell: "'icon-sound'"
+  profiles/default/terminal-title: "'${id}: ${title}'"
+  profiles/default/notify-silence-threshold: "10"
+  profiles/default/background-color: "'#263238'"
+  profiles/default/background-transparency-percent: "4"
+  profiles/default/dim-transparency-percent: "36"
+  profiles/default/use-theme-colors: "true"
+  quake-specific-monitor: "0"
+  prompt-on-close: "true"
+  sidebar-on-right: "false"
+  terminal-title-style: "'small'"
+  theme-variant: "'dark'"
+  session-name: "'${title}'"
+  control-scroll-zoom: "true"
+  enable-wide-handle: "false"
+  use-tabs: "true"
+  warn-vte-config-issue: "false"
+  terminal-title-show-when-single: "true"
+  window-style: "'disable-csd-hide-toolbar'"
+  keybindings/terminal-scroll-down: "'disabled'"
+  keybindings/session-add-right: "'<Primary><Shift>r'"
+  keybindings/session-add-down: "'<Primary><Shift>d'"
+
+nerd:
+  version: v2.0.0
+  fonts:
+  - AnonymousPro
+  - FantasqueSansMono
+  - Hack
+  - Monofur
+  - SourceCodePro

@@ -1,0 +1,33 @@
+---
+- name: Install asdf-vm
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: "{{ item.name }}"
+  git:
+    repo: https://github.com/asdf-vm/asdf.git
+    dest: "~/.asdf"
+    version: v0.7.2
+
+- name: Add asdf-vm to shell
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: "{{ item.name }}"
+  blockinfile:
+    path: "~/.profile"
+    insertafter: EOF
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - asdf"
+    block: |
+      . $HOME/.asdf/asdf.sh
+      . $HOME/.asdf/completions/asdf.bash
+  
+- name: Add asdf-vm plugins
+  loop: "{{ users|product(asdf_plugins|dict2items)|list }}"
+  loop_control:
+    label: "{{ item.0.name }}: {{ item.1.key }}"
+  become: "{{ item.0.name }}"
+  shell: . ~/.asdf/asdf.sh && asdf plugin-add {{ item.1.key }} {{ item.1.value }}
+  args:
+    creates: ~/.asdf/plugins/{{ item.1.key }}
+    executable: /bin/bash

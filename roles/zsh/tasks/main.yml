@@ -6,4 +6,4 @@
 
 - name: Setup User
   include_tasks: user.yml
-  when: target_user != ""
+  when: users is defined and (users|length>0)

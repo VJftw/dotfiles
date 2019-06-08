@@ -1,0 +1,21 @@
+---
+# tasks file for nerd-fonts
+
+- name: Ensure directories
+  loop: "{{ nerd.fonts }}"
+  become: yes
+  file:
+    path: "/usr/share/fonts/NerdFonts/{{ item }}"
+    state: directory
+
+- name: download Fonts
+  loop: "{{ nerd.fonts }}"
+  become: yes
+  unarchive:
+    remote_src: yes
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd.version }}/{{ item }}.zip"
+    dest: "/usr/share/fonts/NerdFonts/{{ item }}"
+
+- name: Reload font-cache
+  become: yes
+  command: fc-cache -fv

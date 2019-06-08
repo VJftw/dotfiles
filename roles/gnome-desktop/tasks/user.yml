@@ -1,0 +1,10 @@
+---
+- name: Set default terminal
+  with_items: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  become: "{{ item.name }}"
+  # command: gsettings set org.gnome.desktop.default-applications.terminal exec 'tilix'
+  dconf:
+    key: "/org/gnome/desktop/default-applications/terminal/exec"
+    value: "'tilix'"
