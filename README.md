@@ -38,6 +38,7 @@ sudo add-apt-repository ppa:ansible/ansible
 sudo apt-get update
 sudo apt-get install -y ansible curl unzip
 curl -LO https://github.com/VJftw/workspace-settings/archive/master.zip
+rm -rf workspace-settings-master/
 unzip master.zip
 cd workspace-settings-master/
 ansible-galaxy install -r requirements.yml
