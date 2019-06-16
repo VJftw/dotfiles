@@ -25,7 +25,7 @@
   become: "{{ item.name }}"
   file:
     path: "~/.zshrc"
-    state: file
+    state: touch
     mode: 0644
 
 - name: .zshrc sources .profile
