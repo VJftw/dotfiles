@@ -33,23 +33,23 @@ asdf_plugins:
   minikube: https://github.com/alvarobp/asdf-minikube.git
 
 tilix_dconf:
-  profiles/default/foreground-color: "'#A1B0B8'"
-  profiles/default/visible-name: "'Default'"
-  profiles/default/palette: !!str "['#252525', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5', '#708284', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5']"
-  profiles/default/badge-color-set: "false"
-  profiles/default/cursor-shape: "'ibeam'"
-  profiles/default/cursor-colors-set: "false"
-  profiles/default/highlight-colors-set: "true"
-  profiles/default/use-system-font: "false"
-  profiles/default/bold-color-set: "false"
-  profiles/default/font: "'Monofur Nerd Font 12'"
-  profiles/default/terminal-bell: "'icon-sound'"
-  profiles/default/terminal-title: "'${id}: ${title}'"
-  profiles/default/notify-silence-threshold: "10"
-  profiles/default/background-color: "'#263238'"
-  profiles/default/background-transparency-percent: "4"
-  profiles/default/dim-transparency-percent: "36"
-  profiles/default/use-theme-colors: "true"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/foreground-color: "'#A1B0B8'"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/visible-name: "'Default'"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/palette: !!str "['#252525', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5', '#708284', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5']"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/badge-color-set: "false"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/cursor-shape: "'ibeam'"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/cursor-colors-set: "false"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/highlight-colors-set: "true"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/use-system-font: "false"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/bold-color-set: "false"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/font: "'Monofur Nerd Font 12'"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/terminal-bell: "'icon-sound'"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/terminal-title: "'${id}: ${title}'"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/notify-silence-threshold: "10"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/background-color: "'#263238'"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/background-transparency-percent: "4"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/dim-transparency-percent: "36"
+  profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/use-theme-colors: "true"
   quake-specific-monitor: "0"
   prompt-on-close: "true"
   sidebar-on-right: "false"
@@ -74,3 +74,4 @@ nerd:
   - Hack
   - Monofur
   - SourceCodePro
+  - DroidSansMono

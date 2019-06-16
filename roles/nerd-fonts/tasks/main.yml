@@ -8,13 +8,25 @@
     path: "/usr/share/fonts/NerdFonts/{{ item }}"
     state: directory
 
-- name: download Fonts
+- name: Check for existing fonts
   loop: "{{ nerd.fonts }}"
   become: yes
+  register: nerd_installed_fonts
+  find: 
+    paths: "/usr/share/fonts/NerdFonts/{{ item }}" 
+    file_type: file 
+    patterns: "*.*"
+
+- name: Download Fonts
+  loop: "{{ nerd_installed_fonts.results|zip(nerd.fonts)|list }}"
+  become: yes
+  when: item.0.matched|int == 0
+  loop_control:
+    label: "{{ item.1 }}"
   unarchive:
     remote_src: yes
-    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd.version }}/{{ item }}.zip"
-    dest: "/usr/share/fonts/NerdFonts/{{ item }}"
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd.version }}/{{ item.1 }}.zip"
+    dest: "/usr/share/fonts/NerdFonts/{{ item.1 }}"
 
 - name: Reload font-cache
   become: yes

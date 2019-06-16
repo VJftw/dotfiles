@@ -2,19 +2,19 @@
   vars_files:
     - vjftw.vars.yml
   roles:
-    - base
+    # - base
     - nerd-fonts
-    - tilix
-    - git
-    - name: geerlingguy.docker
-      become: yes
-    - name: ngetchell.vscode
-      become: yes
-    - name: pixelart.chrome
-      become: yes
-    - zsh
-    - asdf
+    # - tilix
+    # - git
+    # - name: geerlingguy.docker
+    #   become: yes
+    # - name: ngetchell.vscode
+    #   become: yes
+    # - name: pixelart.chrome
+    #   become: yes
+    # - zsh
+    # - asdf
     # - slack
     # - discord
     # - insync
-    - gnome-desktop
+    # - gnome-desktop
