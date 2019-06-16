@@ -1,5 +1,6 @@
 ---
 - name: Install dependencies
+  become: yes
   apt:
     name:
     - gnome-tweak-tool
