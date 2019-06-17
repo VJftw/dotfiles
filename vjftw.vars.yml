@@ -11,11 +11,6 @@ users:
           name: VJ Patel
           email: vj@vjpatel.me
           signingkey: 8FBF5FF4E34C3A9A
-      extra:
-      - path: ~/Projects/***REMOVED***
-        user:
-          name: Vijendra Patel
-          email: ***REMOVED***
 
 asdf_plugins:
   consul: https://github.com/Banno/asdf-hashicorp.git
