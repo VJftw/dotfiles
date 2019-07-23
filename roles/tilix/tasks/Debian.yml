@@ -4,7 +4,7 @@
   when: ansible_facts['distribution_major_version'] == "16.04"
 
 - apt:
-    name: 
-    - tilix
-    - python-psutil
+    name:
+      - tilix
+      - python-psutil
   become: true

@@ -1,9 +1,6 @@
 ---
-- name: Configure default editor
-  with_items: "{{ users }}"
-  loop_control:
-    label: "{{ item.name }}"
-  become: "{{ item.name }}"
+- name: Configure default CLI editor
+  become: no
   blockinfile:
     path: "~/.profile"
     insertafter: EOF

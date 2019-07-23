@@ -17,8 +17,8 @@
     name: "{{ packages }}"
   vars:
     packages:
-    - vim
-    - curl
-    - htop
-    - iotop
-    - nmap
+      - vim
+      - curl
+      - htop
+      - iotop
+      - nmap

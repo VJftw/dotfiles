@@ -1,9 +1,6 @@
 ---
 - name: User global gitconfig
-  with_items: "{{ users }}"
-  loop_control:
-    label: "{{ item.name }}"
-  become: "{{ item.name }}"
+  become: no
   blockinfile:
     create: yes
     path: "~/.gitconfig"
@@ -11,46 +8,14 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK - global"
     block: |
       [core]
-        editor = {{ item.git.config.global.core.editor }}
+        editor = {{ user.git.config.global.core.editor }}
       [user]
-        name = {{ item.git.config.global.user.name }}
-        email = {{ item.git.config.global.user.email }}
-        signingkey = {{ item.git.config.global.user.signingkey }}
+        name = {{ user.git.config.global.user.name }}
+        email = {{ user.git.config.global.user.email }}
+        {% if user.git.config.global.user.signingkey %}
+        signingkey = {{ user.git.config.global.user.signingkey }}
+        {% endif %}
 
-- name: User extra directory
-  become: "{{ item.0.name }}"
-  loop: "{{ users|subelements('git.config.extra') }}"
-  loop_control:
-    label: "{{ item.0.name }}: {{ item.1.path }}"
-  file:
-    path: "{{ item.1.path }}"
-    state: directory
-
-- name: User Write extra .gitconfig
-  become: "{{ item.0.name }}"
-  loop: "{{ users|subelements('git.config.extra') }}"
-  loop_control:
-    label: "{{ item.0.name }}: {{ item.1.path }}"
-  blockinfile:
-    create: yes
-    path: "{{ item.1.path }}/.gitconfig"
-    insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - {{ item.1.path }}"
-    block: |
-      [user]
-        name = {{ item.1.user.name }}
-        email = {{ item.1.user.email }}
-
-- name: User Include extra .gitconfig
-  become: "{{ item.0.name }}"
-  loop: "{{ users|subelements('git.config.extra') }}"
-  loop_control:
-    label: "{{ item.0.name }}: {{ item.1.path }}"
-  blockinfile:
-    create: yes
-    path: "~/.gitconfig"
-    insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - {{ item.1.path }}"
-    block: |
-      [includeIf "gitdir:{{ item.1.path }}/"]
-        path = {{ item.1.path }}/.gitconfig
+- name: Configure extra Git config
+  include_tasks: user-extra.yml
+  when: user.git.config.extra is defined

@@ -1,38 +1,26 @@
 ---
 - name: Set default shell to zsh
-  with_items: "{{ users }}"
-  loop_control:
-    label: "{{ item.name }}"
-  become: yes
+  become: no
   user:
-    name: "{{ item.name }}"
+    name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
 
-- name: Install antigen
-  with_items: "{{ users }}"
-  loop_control:
-    label: "{{ item.name }}"
-  become: "{{ item.name }}"
+- name: Install zplug
+  become: no
   git:
-    repo: 'https://github.com/zsh-users/antigen.git'
-    dest: "~/.antigen"
-    version: v2.2.3
+    repo: "https://github.com/zplug/zplug.git"
+    dest: "~/.zplug"
+    version: master
 
 - name: ensure .zshrc
-  with_items: "{{ users }}"
-  loop_control:
-    label: "{{ item.name }}"
-  become: "{{ item.name }}"
+  become: no
   file:
     path: "~/.zshrc"
     state: touch
     mode: 0644
 
 - name: .zshrc sources .profile
-  with_items: "{{ users }}"
-  loop_control:
-    label: "{{ item.name }}"
-  become: "{{ item.name }}"
+  become: no
   blockinfile:
     path: "~/.zshrc"
     marker: "# {mark} ANSIBLE MANAGED BLOCK - bashrc"
@@ -40,37 +28,31 @@
     block: |
       source "${HOME}/.profile"
 
-- name: Configure antigen
-  with_items: "{{ users }}"
-  loop_control:
-    label: "{{ item.name }}"
-  become: "{{ item.name }}"
+- name: Configure zplug
+  become: no
   blockinfile:
     path: "~/.zshrc"
     insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - antigen"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - zplug"
     block: |
-      source ~/.antigen/antigen.zsh
-      # Load the oh-my-zsh's library.
-      antigen use oh-my-zsh
-      # Bundles from the default repo (robbyrussell's oh-my-zsh).
-      antigen bundle git
-      antigen bundle git-flow
-      antigen bundle pip
-      antigen bundle command-not-found
-      # Syntax highlighting bundle.
-      antigen bundle zsh-users/zsh-syntax-highlighting
-      antigen bundle zsh-users/zsh-completions
-      antigen bundle rimraf/k
-      # Load the theme.
-      POWERLEVEL9K_INSTALLATION_PATH=~/.antigen/bundles/bhilburn/powerlevel9k
-      antigen theme bhilburn/powerlevel9k powerlevel9k
-      POWERLEVEL9K_MODE='awesome-fontconfig'
+      source ~/.zplug/init.zsh
+      zplug "zsh-users/zsh-history-substring-search"
+      zplug "chrissicool/zsh-256color"
+      zplug "plugins/git",   from:oh-my-zsh
+      zplug "plugins/pip",   from:oh-my-zsh
+      zplug "plugins/command-not-found",   from:oh-my-zsh
+      zplug "zsh-users/zsh-syntax-highlighting"
+      zplug "zsh-users/zsh-completions"
+      zplug "supercrabtree/k"
+      zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+      POWERLEVEL9K_MODE='nerdfont-complete'
       POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-      POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+      POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
       POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
       DEFAULT_USER=$(whoami)
-      # Tell antigen that you're done.
-      antigen apply
-
-
+      # Install plugins if there are plugins that have not been installed
+      if ! zplug check; then
+        echo; zplug install
+      fi
+      # Then, source plugins and add commands to $PATH
+      zplug load

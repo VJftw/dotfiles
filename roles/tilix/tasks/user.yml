@@ -1,9 +1,9 @@
 ---
 - name: Configure tilix
-  loop: "{{ users|product(tilix_dconf|dict2items)|list }}"
+  loop: "{{ user.tilix.dconf|dict2items }}"
   loop_control:
-    label: "{{ item.0.name }}: {{ item.1.key }}"
-  become: "{{ item.0.name }}"
+    label: "{{ item.key }}"
+  become: no
   dconf:
-    key: "/com/gexperts/Tilix/{{ item.1.key }}"
-    value: "{{ item.1.value }}"
+    key: "/com/gexperts/Tilix/{{ item.key }}"
+    value: "{{ item.value }}"

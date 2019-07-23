@@ -1,20 +1,19 @@
-- hosts: all
+- name: user workspace
+  hosts: all
   vars_files:
     - vjftw.vars.yml
   roles:
-    # - base
-    - nerd-fonts
-    # - tilix
-    # - git
-    # - name: geerlingguy.docker
-    #   become: yes
-    # - name: ngetchell.vscode
-    #   become: yes
-    # - name: pixelart.chrome
-    #   become: yes
-    # - zsh
-    # - asdf
+    - base
+    - fonts
+    - asdf
+    - git
+    - zsh
+    - tilix
+    - gnome-desktop
+    - name: ngetchell.vscode
+      become: yes
+    - name: pixelart.chrome
+      become: yes
     # - slack
     # - discord
     # - insync
-    # - gnome-desktop

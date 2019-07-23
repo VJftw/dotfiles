@@ -2,6 +2,6 @@
 - include_tasks: Debian.yml
   when: ansible_os_family == 'Debian'
 
-- name: Setup Users
+- name: Setup User
   include_tasks: user.yml
-  when: users is defined and (users|length>0)
+  when: user is defined

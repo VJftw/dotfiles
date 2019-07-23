@@ -2,4 +2,4 @@
 # tasks file for asdf
 - name: Setup User
   include_tasks: user.yml
-  when: users is defined and (users|length>0)
+  when: user is defined and user.asdf  is defined

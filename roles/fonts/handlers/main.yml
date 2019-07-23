@@ -1,0 +1,3 @@
+---
+- name: reload font-cache
+  command: fc-cache -fv

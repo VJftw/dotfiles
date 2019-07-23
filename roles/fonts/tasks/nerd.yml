@@ -1,0 +1,26 @@
+---
+- name: Ensure directories
+  loop: "{{ user.fonts.nerd.fonts }}"
+  file:
+    path: "{{ ansible_env.HOME }}/.local/share/fonts/NerdFonts/{{ item }}"
+    state: directory
+
+- name: Check for existing fonts
+  loop: "{{ user.fonts.nerd.fonts }}"
+  register: nerd_installed_fonts
+  find:
+    paths: "{{ ansible_env.HOME }}/.local/share/fonts/NerdFonts/{{ item }}"
+    file_type: file
+    patterns: "*.*"
+
+- name: Download Fonts
+  loop: "{{ nerd_installed_fonts.results|zip(user.fonts.nerd.fonts)|list }}"
+  when: item.0.matched|int == 0
+  loop_control:
+    label: "{{ item.1 }}"
+  unarchive:
+    remote_src: yes
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ user.fonts.nerd.version }}/{{ item.1 }}.zip"
+    dest: "{{ ansible_env.HOME }}/.local/share/fonts/NerdFonts/{{ item.1 }}"
+  notify:
+    - reload font-cache
