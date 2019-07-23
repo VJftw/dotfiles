@@ -5,12 +5,12 @@
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
 
-- name: Install zplug
+- name: Install antigen
   become: no
   git:
-    repo: "https://github.com/zplug/zplug.git"
-    dest: "~/.zplug"
-    version: master
+    repo: "https://github.com/zsh-users/antigen.git"
+    dest: "~/.antigen"
+    version: v2.2.3
 
 - name: ensure .zshrc
   become: no
@@ -28,31 +28,34 @@
     block: |
       source "${HOME}/.profile"
 
-- name: Configure zplug
+- name: Configure antigen
   become: no
   blockinfile:
     path: "~/.zshrc"
     insertafter: EOF
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - zplug"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - antigen"
     block: |
-      source ~/.zplug/init.zsh
-      zplug "zsh-users/zsh-history-substring-search"
-      zplug "chrissicool/zsh-256color"
-      zplug "plugins/git",   from:oh-my-zsh
-      zplug "plugins/pip",   from:oh-my-zsh
-      zplug "plugins/command-not-found",   from:oh-my-zsh
-      zplug "zsh-users/zsh-syntax-highlighting"
-      zplug "zsh-users/zsh-completions"
-      zplug "supercrabtree/k"
-      zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+      source ~/.antigen/antigen.zsh
+      # For tilix
+      if [[ $TILIX_ID ]]; then
+        source /etc/profile.d/vte.sh
+      fi
+      # Load the oh-my-zsh's library.
+      antigen use oh-my-zsh
+      # Bundles from the default repo (robbyrussell's oh-my-zsh).
+      antigen bundle git
+      antigen bundle command-not-found
+      # Syntax highlighting bundle.
+      antigen bundle zsh-users/zsh-syntax-highlighting
+      antigen bundle zsh-users/zsh-completions
+      antigen bundle supercrabtree/k
+      # Powerlevel9k Theme
+      POWERLEVEL9K_INSTALLATION_PATH=~/.antigen/bundles/bhilburn/powerlevel9k
+      antigen theme bhilburn/powerlevel9k powerlevel9k
       POWERLEVEL9K_MODE='nerdfont-complete'
       POWERLEVEL9K_PROMPT_ON_NEWLINE=true
       POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
       POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
       DEFAULT_USER=$(whoami)
-      # Install plugins if there are plugins that have not been installed
-      if ! zplug check; then
-        echo; zplug install
-      fi
-      # Then, source plugins and add commands to $PATH
-      zplug load
+      # Tell antigen that you're done.
+      antigen apply
