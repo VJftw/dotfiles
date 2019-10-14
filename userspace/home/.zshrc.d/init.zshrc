@@ -1,3 +1,3 @@
-for f in $(ls ~/.vjftw.zshrc.d/*.zsh | sort); do
+for f in $(ls ~/.zshrc.d/*.zsh | sort); do
     source "${f}";
 done

@@ -15,7 +15,7 @@ else
     cd "${cwd}"
 fi
 
-ln -s ~/.zshrc.d ~/.vjftw.dotfiles/userspace/home/.zshrc.d
+ln -s ~/.vjftw.dotfiles/userspace/home/.zshrc.d ~/.zshrc.d
 
 # source it in zshrc
 touch ~/.zshrc || true
