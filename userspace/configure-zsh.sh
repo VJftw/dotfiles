@@ -15,8 +15,10 @@ else
     cd "${cwd}"
 fi
 
-ln -s ~/.vjftw.dotfiles/userspace/home/.zshrc.d ~/.zshrc.d
+ln -s ~/.vjftw.dotfiles/userspace/home/.zshrc.d ~/.zshrc.d || true
 
 # source it in zshrc
 touch ~/.zshrc || true
 grep "source ~/.zshrc.d/init.zshrc" ~/.zshrc || echo "source ~/.zshrc.d/init.zshrc" >> ~/.zshrc
+
+~/.zshrc.d/oh-my-zsh.install.sh
