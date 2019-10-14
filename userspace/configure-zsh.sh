@@ -8,6 +8,8 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/cu
 
 # Install syntax highlighting 
 git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+# Install autosuggestions
+git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 # Download .vjftw.zshrc
 curl -L https://raw.githubusercontent.com/VJftw/dotfiles/master/userspace/home/.vjftw.zshrc -o ~/.vjftw.zshrc
