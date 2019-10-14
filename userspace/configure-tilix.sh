@@ -10,4 +10,4 @@ gsettings set org.gnome.desktop.default-applications.terminal exec 'tilix'
 curl -L https://raw.githubusercontent.com/VJftw/dotfiles/master/userspace/home/.tilix.zshrc -o ~/.tilix.zshrc
 
 # source it in zshrc
-grep "source ~/.tilix.zshrc" ~/.zshrc || sed -i '1s/^/source ~/.tilix.zshrc\n/' ~/.zshrc
+grep "source ~/.tilix.zshrc" ~/.zshrc || sed -i '1s#^#source ~/.tilix.zshrc\n#' ~/.zshrc
