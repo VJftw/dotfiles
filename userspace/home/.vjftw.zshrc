@@ -11,7 +11,12 @@ plugins=(
   git
   command-not-found
   kubectl
-  golang 
+  golang
+  colorize
+  docker
+  pip
+  lol
+  minikube
 )
 
 # Powerlevel9k Theme
