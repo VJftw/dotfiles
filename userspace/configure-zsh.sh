@@ -1,18 +1,22 @@
 #!/bin/bash -e
 
 # Install oh-my-zsh
-git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+if [ ! -d "${HOME}/.oh-my-zsh" ]; then
+    git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+fi
 
-# Install powerlevel10k theme
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
+# Install/update .zshrc.d
+if [ ! -d "${HOME}/.vjftw.dotfiles" ]; then
+    git clone https://github.com/vjftw/dotfiles ~/.vjftw.dotfiles
+else
+    cwd="${PWD}"
+    cd "${HOME}/.vjftw.dotfiles"
+    git pull
+    cd "${cwd}"
+fi
 
-# Install syntax highlighting 
-git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-# Install autosuggestions
-git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-
-# Download .vjftw.zshrc
-curl -L https://raw.githubusercontent.com/VJftw/dotfiles/master/userspace/home/.vjftw.zshrc -o ~/.vjftw.zshrc
+ln -s ~/.zshrc.d ~/.vjftw.dotfiles/userspace/home/.zshrc.d
 
 # source it in zshrc
-grep "source ~/.vjftw.zshrc" ~/.zshrc || echo "source ~/.vjftw.zshrc" >> ~/.zshrc
+touch ~/.zshrc || true
+grep "source ~/.zshrc.d/init.zshrc" ~/.zshrc || echo "source ~/.zshrc.d/init.zshrc" >> ~/.zshrc
