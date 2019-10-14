@@ -1,4 +1,3 @@
-# For tilix
 source "${HOME}/.profile"
 
 export ZSH=$HOME/.oh-my-zsh
@@ -6,6 +5,8 @@ export ZSH=$HOME/.oh-my-zsh
 plugins=(
   git
   command-not-found
+  zsh-syntax-highlighting
+  zsh-autosuggestions
   kubectl
   golang
   colorize
