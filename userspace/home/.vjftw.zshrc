@@ -1,10 +1,6 @@
 # For tilix
 source "${HOME}/.profile"
 
-if [[ $TILIX_ID ]]; then
-  source /etc/profile.d/vte.sh
-fi
-
 export ZSH=$HOME/.oh-my-zsh
 
 plugins=(
