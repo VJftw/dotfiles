@@ -1,0 +1,24 @@
+{
+    "window.zoomLevel": 0,
+    "editor.renderWhitespace": "all",
+    "window.titleBarStyle": "custom",
+    "vsicons.projectDetection.autoReload": true,
+    "editor.formatOnSave": true,
+    "python.linting.enabled": true,
+    "python.globalModuleInstallation": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "workbench.editor.enablePreview": false,
+    "go.useLanguageServer": true,
+    "[go]": {
+        "editor.snippetSuggestions": "none",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+        }
+    },
+    "files.eol": "\n",
+    "editor.tabSize": 2,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true, // formatting only supports LF line endings
+}
