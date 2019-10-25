@@ -21,4 +21,7 @@
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true, // formatting only supports LF line endings
+    "files.associations": {
+      "Dockerfile-*":"dockerfile"
+    },
 }
