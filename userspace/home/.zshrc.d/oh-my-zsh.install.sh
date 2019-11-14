@@ -5,6 +5,7 @@ git_addresses=(
     "https://github.com/zsh-users/zsh-syntax-highlighting.git"
     "https://github.com/zsh-users/zsh-autosuggestions.git"
     "https://github.com/chrissicool/zsh-256color.git"
+    "https://github.com/supercrabtree/k"
 )
 for url in $git_addresses; do
     name=$(echo ${url//.git} | rev | cut -d'/' -f1 | rev)
@@ -20,8 +21,8 @@ for url in $git_addresses; do
 done
 
 # Install Theme
-if [ ! -d "${HOME}/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
+if [ ! -d "${HOME}/.oh-my-zsh/custom/themes/powerlevel9k" ]; then
+    git clone --depth=1 https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 else
     cwd="${PWD}"
     cd "${install_dir}"
