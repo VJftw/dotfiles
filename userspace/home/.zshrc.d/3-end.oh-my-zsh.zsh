@@ -10,6 +10,9 @@ plugins+=(
   lol
   minikube
   zsh-256color
+  aws
 )
+
+echo "${plugins}"
 
 source "${ZSH}/oh-my-zsh.sh"
