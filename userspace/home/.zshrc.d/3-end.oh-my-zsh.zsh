@@ -3,6 +3,7 @@ plugins+=(
   command-not-found
   zsh-syntax-highlighting
   kubectl
+  k
   golang
   colorize
   docker
