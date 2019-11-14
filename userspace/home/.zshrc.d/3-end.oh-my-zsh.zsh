@@ -2,8 +2,8 @@ plugins+=(
   git
   command-not-found
   zsh-syntax-highlighting
+  k # must come before kubectl
   kubectl
-  k
   golang
   colorize
   docker
@@ -13,6 +13,7 @@ plugins+=(
   zsh-256color
   aws
 )
+alias l='\k' # re-alias 'supercrabtree/k' as `l` as kubectl plugin uses `k`
 
 echo "${plugins}"
 
