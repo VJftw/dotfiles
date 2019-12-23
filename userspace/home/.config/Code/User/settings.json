@@ -10,6 +10,7 @@
     "go.useLanguageServer": true,
     "go.formatTool": "goimports",
     "go.gotoSymbol.includeImports": true,
+    "go.testFlags": ["-v"],
     "files.associations": {
         "Dockerfile-*": "dockerfile"
     },
