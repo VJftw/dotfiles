@@ -1,0 +1,11 @@
+---
+# tasks file for git
+- include_tasks: Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- include_tasks: Debian.yml
+  when: ansible_distribution == 'Debian'
+
+- name: Setup Users
+  include_tasks: user.yml
+  when: user is defined and user.git is defined

@@ -1,0 +1,10 @@
+---
+- name: Install ZSH
+  become: yes
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - zsh
+      - gawk
+      - rsync

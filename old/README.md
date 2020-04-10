@@ -36,6 +36,7 @@ source ~/.scripts/export-aws-credentials.sh ~/Downloads/accessKeys.csv
 ```
 sudo add-apt-repository ppa:ansible/ansible
 sudo apt-get update
+pip install --user ansible
 sudo apt-get install -y ansible curl unzip
 curl -LO https://github.com/VJftw/workspace-settings/archive/master.zip
 rm -rf workspace-settings-master/

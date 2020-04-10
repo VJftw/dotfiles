@@ -1,0 +1,9 @@
+---
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+
+# tasks file for gnome-desktop
+- include_tasks: Debian-gnome.yml
+  when: ansible_os_family == 'Debian' and 'gnome-desktop' in ansible_facts.packages
+

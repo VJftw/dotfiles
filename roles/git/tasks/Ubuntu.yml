@@ -1,0 +1,11 @@
+---
+- name: Add Git PPA
+  become: yes
+  apt_repository:
+    repo: ppa:git-core/ppa
+    update_cache: yes
+
+- name: Install Git
+  become: yes
+  apt:
+    name: git

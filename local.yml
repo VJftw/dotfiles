@@ -1,0 +1,25 @@
+---
+- name: Workspace
+  hosts: all
+  vars_files:
+    - vjftw.vars.yml
+  vars_prompt:
+    - { name: do_base, prompt: "Base role?", default: "y" }
+    - { name: do_fonts, prompt: "Fonts role?", default: "y" }
+    - { name: do_asdf, prompt: "ASDF role?", default: "y" }
+    - { name: do_git, prompt: "Git role?", default: "y" }
+    - { name: do_zsh, prompt: "ZSH role?", default: "y" }
+    - { name: do_tilix, prompt: "Tilix role?", default: "y" }
+    - { name: do_desktop, prompt: "Desktop role?", default: "y" }
+    - { name: do_vscode, prompt: "VSCode role?", default: "y" }
+    - { name: do_chrome, prompt: "Chrome role?", default: "y" }
+  roles:
+    - { role: base, when: do_base == "y" }
+    - { role: fonts, when: do_fonts == "y" }
+    - { role: asdf, when: do_asdf == "y" }
+    - { role: git, when: do_git == "y" }
+    - { role: zsh, when: do_zsh == "y" }
+    - { role: tilix, when: do_tilix == "y" }
+    - { role: desktop, when: do_desktop == "y" }
+    - { role: ngetchell.vscode, become: yes, when: do_vscode == "y" }
+    - { role: pixelart.chrome, become: yes, when: do_chrome == "y" }

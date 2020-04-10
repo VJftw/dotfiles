@@ -1,0 +1,6 @@
+---
+- name: Ansible Galaxy
+  hosts: localhost
+  tasks:
+  - name: install galaxy roles
+    command: ~/.local/bin/ansible-galaxy install -r requirements.yml --roles-path ./roles

@@ -1,8 +1,0 @@
----
-# tasks file for git
-- include_tasks: Debian.yml
-  when: ansible_os_family == 'Debian'
-
-- name: Setup Users
-  include_tasks: user.yml
-  when: user is defined and user.git is defined
