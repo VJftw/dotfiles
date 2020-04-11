@@ -1,12 +1,7 @@
 ---
 - include_tasks: Debian.yml
   when: ansible_os_family == 'Debian'
-
-- include_role:
-    name: geerlingguy.docker
-    apply:
-      become: yes
-
+  
 - name: Setup User
   include_tasks: user.yml
   when: user is defined
