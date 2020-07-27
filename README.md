@@ -8,3 +8,10 @@ ansible-pull --url https://github.com/VJftw/dotfiles
 ```bash
 ansible-playbook local.yml
 ```
+
+
+## Fedora
+
+```bash
+sudo dnf install ansible
+```

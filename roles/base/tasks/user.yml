@@ -1,4 +1,10 @@
 ---
+- name: ensure ~/.profile exists
+  become: no
+  file:
+    path: "~/.profile"
+    state: touch
+
 - name: Configure default CLI editor
   become: no
   blockinfile:

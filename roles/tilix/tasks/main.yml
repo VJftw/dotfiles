@@ -6,6 +6,9 @@
 - include_tasks: Debian.yml
   when: ansible_os_family == 'Debian'
 
+- include_tasks: RedHat.yml
+  when: ansible_os_family == 'RedHat'
+  
 - name: Setup User
   include_tasks: user-gnome.yml
   when: user is defined and ansible_os_family == 'Debian' and 'gnome-desktop' in ansible_facts.packages

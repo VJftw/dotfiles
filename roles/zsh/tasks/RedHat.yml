@@ -1,0 +1,11 @@
+---
+- name: Install ZSH
+  become: yes
+  dnf:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - zsh
+      - gawk
+      - rsync
+      - util-linux-user
