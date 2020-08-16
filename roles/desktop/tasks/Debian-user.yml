@@ -1,6 +1,0 @@
----
-- name: Set default terminal
-  become: no
-  dconf:
-    key: "/org/gnome/desktop/default-applications/terminal/exec"
-    value: "'tilix'"

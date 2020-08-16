@@ -1,9 +1,0 @@
----
-- name: Configure tilix
-  loop: "{{ user.tilix.dconf|dict2items }}"
-  loop_control:
-    label: "{{ item.key }}"
-  become: no
-  dconf:
-    key: "/com/gexperts/Tilix/{{ item.key }}"
-    value: "{{ item.value }}"

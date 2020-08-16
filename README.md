@@ -1,17 +1,7 @@
 # Dotfiles
 
-```bash
-ansible-pull --url https://github.com/VJftw/dotfiles
-```
+Managed by [chezmoi](https://chezmoi.io).
 
-## Local development
-```bash
-ansible-playbook local.yml
-```
-
-
-## Fedora
-
-```bash
-sudo dnf install ansible
+```sh
+chezmoi init https://github.com/VJftw/dotfiles.git
 ```

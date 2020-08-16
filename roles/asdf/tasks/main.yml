@@ -1,5 +1,0 @@
----
-# tasks file for asdf
-- name: Setup User
-  include_tasks: user.yml
-  when: user is defined and user.asdf  is defined

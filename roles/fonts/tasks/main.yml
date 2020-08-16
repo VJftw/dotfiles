@@ -1,5 +1,0 @@
----
-# tasks file for fonts
-
-- include_tasks: nerd.yml
-  when: user.fonts.nerd is defined
