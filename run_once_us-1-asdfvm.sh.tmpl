@@ -1,6 +1,9 @@
-{{ if eq .setup-asdvm "y" -}}
+{{ if eq .setup_asdfvm "y" -}}
 #!/bin/bash
-set -euxo pipefail
+set -euo pipefail
 
-git clone --depth=1 https://github.com/asdf-vm/asdf.git ~/.asdf
+install_dir="${HOME}/.asdf"
+if [ ! -d "${install_dir}" ]; then
+    git clone --depth=1 https://github.com/asdf-vm/asdf.git ~/.asdf
+fi
 {{ end -}}

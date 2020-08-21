@@ -1,5 +1,12 @@
 {{- $name := promptString "name" -}}
 {{- $email := promptString "email" -}}
+{{- $setup_asdfvm := promptString "setup asdf-vm? (y/n)" -}}
+{{- $setup_fonts := promptString "setup fonts? (y/n)" -}}
+{{- $setup_bitwarden := promptString "setup bitwarden? (y/n)" -}}
 [data]
     name = "{{ $name }}"
     email = "{{ $email }}"
+    setup_asdfvm = "{{ $setup_asdfvm }}"
+    setup_fonts = "{{ $setup_fonts }}"
+    setup_bitwarden = "{{ $setup_bitwarden }}"
+    signingkey = "signingkey_replaceme"

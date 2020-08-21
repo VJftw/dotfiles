@@ -1,0 +1,13 @@
+{{ if eq .setup_bitwarden "y" -}}
+#!/bin/bash
+set -euo pipefail
+
+curl -L "https://vault.bitwarden.com/download/?app=cli&platform=linux" \
+    -o "${HOME}/Downloads/bw.zip"
+
+unzip "${HOME}/Downloads/bw.zip" -d "${HOME}/Downloads"
+mv "${HOME}/Downloads/bw" "${HOME}/.local/bin/bw"
+chmod +x "${HOME}/.local/bin/bw"
+
+rm "${HOME}/Downloads/bw.zip"
+{{ end }}
