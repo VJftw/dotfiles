@@ -7,6 +7,7 @@ plugins+=(
   colorize
   docker
   pip
+  please
   minikube
   zsh-256color
   aws
