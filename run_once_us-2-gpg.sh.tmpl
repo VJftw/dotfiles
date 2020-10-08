@@ -2,6 +2,8 @@
 #!/bin/bash
 set -euo pipefail
 
+export GPG_TTY=$(tty)
+
 read -p 'Enter bitwarden email: ' bitwarden_email
 bw login "${bitwarden_email}" || true
 
@@ -14,8 +16,7 @@ gpg_attachments=$(bw list items --search gpg | jq -r '.[0].attachments[].id')
 
 for gpg_attachment in ${gpg_attachments}; do
     echo "-> reading bitwarden attachment '${gpg_attachment}' for '${gpg_item_id}'"
-    filepath=$(bw get attachment "${gpg_attachment}" --itemid "${gpg_item_id}" --raw)
-    contents=$(cat "${filepath}")
+    contents=$(bw get attachment "${gpg_attachment}" --itemid "${gpg_item_id}" --raw)
 
     if echo "${contents}" | grep "BEGIN PGP PRIVATE KEY BLOCK" > /dev/null; then
         echo "${contents}" | gpg --allow-secret-key-import --import -
@@ -25,7 +26,6 @@ for gpg_attachment in ${gpg_attachments}; do
         echo "${contents}" | gpg --import -
     fi
 
-    rm "${filepath}"
 done
 
 # git signing key
