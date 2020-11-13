@@ -7,7 +7,7 @@ cat << EOF | sudo tee /usr/local/bin/powersave
 set -euo pipefail
 
 /usr/bin/cpupower --cpu all frequency-set -g powersave
-/usr/bin/cpupower --cpu all frequency-set --min 400Mhz --max 1.60Ghz
+/usr/sbin/powertop --auto-tune
 EOF
 sudo chmod 0700 /usr/local/bin/powersave
 sudo chmod +x /usr/local/bin/powersave
