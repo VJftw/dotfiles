@@ -9,6 +9,7 @@ plugins=(
 
 themes=(
     "powerlevel9k|https://github.com/bhilburn/powerlevel9k.git"
+    "powerlevel10k|https://github.com/romkatv/powerlevel10k.git"
 )
 
 git clone --depth=1 \
