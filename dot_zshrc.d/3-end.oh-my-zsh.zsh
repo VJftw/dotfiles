@@ -11,6 +11,7 @@ plugins+=(
   minikube
   zsh-256color
   aws
+  asdf
 )
 
 echo "${plugins}"

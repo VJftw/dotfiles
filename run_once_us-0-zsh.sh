@@ -8,20 +8,19 @@ plugins=(
 )
 
 themes=(
-    "powerlevel9k|https://github.com/bhilburn/powerlevel9k.git"
     "powerlevel10k|https://github.com/romkatv/powerlevel10k.git"
 )
 
 git clone --depth=1 \
     "https://github.com/robbyrussell/oh-my-zsh.git" \
-    "${HOME}/.oh-my-zsh"
+    "${HOME}/.oh-my-zsh" || true
 
 for plugin in "${plugins[@]}"; do
     name=$(echo "${plugin}" | cut -d\| -f1)
     repo=$(echo "${plugin}" | cut -d\| -f2)
     git clone --depth=1 \
         "${repo}" \
-        "${HOME}/.oh-my-zsh/custom/plugins/${name}"
+        "${HOME}/.oh-my-zsh/custom/plugins/${name}" || true
 done
 
 for theme in "${themes[@]}"; do
@@ -29,5 +28,5 @@ for theme in "${themes[@]}"; do
     repo=$(echo "${theme}" | cut -d\| -f2)
     git clone --depth=1 \
         "${repo}" \
-        "${HOME}/.oh-my-zsh/custom/themes/${name}"
+        "${HOME}/.oh-my-zsh/custom/themes/${name}" || true
 done
