@@ -4,6 +4,15 @@ set -euo pipefail
 
 fontsPath="${HOME}/.local/share/fonts"
 
+nerdFonts=(
+  "AnonymousPro"
+  "FantasqueSansMono"
+  "Hack"
+  "Monofur"
+  "SourceCodePro"
+  "DroidSansMono"
+)
+
 function installNerdFont {
   local baseUrl="https://github.com/ryanoasis/nerd-fonts/releases/download"
   local version="v2.0.0"
@@ -22,16 +31,7 @@ function installNerdFont {
   fi
 }
 
-nerdFonts="
-AnonymousPro
-FantasqueSansMono
-Hack
-Monofur
-SourceCodePro
-DroidSansMono
-"
-
-for font in $nerdFonts; do
+for font in "${nerdFonts[@]}"; do
     installNerdFont $font
 done
 {{ end }}
