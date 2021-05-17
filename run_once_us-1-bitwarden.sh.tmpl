@@ -2,6 +2,7 @@
 #!/bin/bash
 set -euo pipefail
 
+mkdir -p "${HOME}/Downloads"
 curl -L "https://vault.bitwarden.com/download/?app=cli&platform=linux" \
     -o "${HOME}/Downloads/bw.zip"
 
