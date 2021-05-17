@@ -9,6 +9,7 @@ curl -L "https://vault.bitwarden.com/download/?app=cli&platform=linux" \
 unzip "${HOME}/Downloads/bw.zip" -d "${HOME}/Downloads"
 mv "${HOME}/Downloads/bw" "${HOME}/.local/bin/bw"
 chmod +x "${HOME}/.local/bin/bw"
+export PATH="${PATH}:${HOME}/.local/bin"
 
 rm "${HOME}/Downloads/bw.zip"
 {{ end }}
