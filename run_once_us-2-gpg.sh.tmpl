@@ -4,6 +4,8 @@ set -euo pipefail
 
 export GPG_TTY=$(tty)
 
+export PATH="${PATH}:${HOME}/.local/bin"
+
 read -p 'Enter bitwarden email: ' bitwarden_email
 bw login "${bitwarden_email}" || true
 
