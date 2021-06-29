@@ -1,4 +1,9 @@
+#!/usr/bin/env zsh
+
 export KUBECONFIG="$HOME/.kube/config"
-for f in $HOME/.kube/configs/*.yaml; do
-    export KUBECONFIG=$KUBECONFIG:$f
-done
+
+if [ -d "$HOME/.kube/configs" ]; then
+    for f in $(ls "$HOME/.kube/configs" | sort); do
+        export KUBECONFIG=$KUBECONFIG:$f
+    done
+fi

@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 plugins+=('zsh-autosuggestions')
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20

@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # Powerlevel10k Theme
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true

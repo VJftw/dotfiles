@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 plugins+=(
   git
   command-not-found
