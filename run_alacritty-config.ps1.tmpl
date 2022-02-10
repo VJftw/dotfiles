@@ -1,0 +1,5 @@
+{{ if eq .chezmoi.os "windows" -}}
+$alacrittyConfigDir = $env:APPDATA\alacritty
+md $alacrittyConfigDir -ea 0
+wget https://raw.githubusercontent.com/VJftw/dotfiles/master/.alacritty.windows.yml -OutFile $alacrittyConfigDir\alacritty.yml
+{{ end -}}
