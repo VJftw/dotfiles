@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
 set -euo pipefail
 
@@ -30,3 +31,4 @@ for theme in "${themes[@]}"; do
         "${repo}" \
         "${HOME}/.oh-my-zsh/custom/themes/${name}" || true
 done
+{{ end -}}
