@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
 
-export EDITOR=vim
+alias vim=nvim
+export EDITOR=nvim
 export GPG_TTY=$(tty)
