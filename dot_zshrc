@@ -1,2 +1,13 @@
-source "${HOME}/.profile"
-source ~/.zshrc.d/init.zshrc
+#!/usr/bin/env zsh
+
+files_to_source=(
+  "${HOME}/.profile"
+  "${HOME}/.zshrc.d/init.zshrc"
+)
+
+for f in "${files_to_source[@]}"; do
+  if [ -f "$f" ]; then
+    source "$f"
+  fi
+done
+
