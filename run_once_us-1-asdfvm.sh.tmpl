@@ -35,6 +35,7 @@ plugins=(
 for plugin in "${plugins[@]}"; do
   if ! asdf plugin-list | grep "$plugin" > /dev/null; then
     asdf plugin-add "$plugin"
+    asdf install "$plugin" latest 
   fi
 done
 
