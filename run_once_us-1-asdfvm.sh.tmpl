@@ -5,5 +5,39 @@ set -euo pipefail
 install_dir="${HOME}/.asdf"
 if [ ! -d "${install_dir}" ]; then
     git clone --depth=1 https://github.com/asdf-vm/asdf.git ~/.asdf
+else
+    asdf update
 fi
+
+plugins=(
+    "python"
+    "terraform"
+    "helm"
+    "minikube"
+    "awscli"
+    "chezmoi"
+    "erlang"
+    "golang"
+    "golangci-lint"
+    "ruby"
+    "rust"
+    "shellcheck"
+    "yq"
+    "jq"
+    "kubectl"
+    "kustomize"
+    "mitmproxy"
+    "nodejs"
+    "stern"
+    "k3d"
+    "kind"
+)
+
+for plugin in "${plugins[@]}"; do
+  if ! asdf plugin-list | grep "$plugin" > /dev/null; then
+    asdf plugin-add "$plugin"
+  fi
+done
+
+asdf plugin-update --all
 {{ end -}}
