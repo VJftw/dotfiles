@@ -29,7 +29,7 @@ plugins=(
   "minikube,none"
   "mitmproxy,latest"
   "nodejs,none"
-  "python,none"
+  "python,latest"
   "ruby,none"
   "rust,none"
   "shellcheck,latest"
@@ -37,6 +37,14 @@ plugins=(
   "terraform,none"
   "yq,latest"
 )
+
+# Install Python build dependencies
+{{ if eq .chezmoi.osRelease.id "ubuntu" }}
+  log::info "Installing python build dependencies."
+  sudo apt update; sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+  libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+  libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+{{ end }}
 
 for plugin in "${plugins[@]}"; do
   name="$(echo "$plugin" | cut -f1 -d,)"
