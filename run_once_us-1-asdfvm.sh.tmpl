@@ -9,6 +9,7 @@ if [ ! -d "${install_dir}" ]; then
   log::success "Installed ASDF-VM."
 else
   log::info "Updating ASDF-VM."
+  export PATH="${install_dir}/bin:$PATH"
   asdf update
   log::success "Updated ASDF-VM."
 fi
