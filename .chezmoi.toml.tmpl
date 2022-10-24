@@ -2,7 +2,6 @@
 {{- $email := promptString "email" -}}
 {{- $setup_asdfvm := promptString "setup asdf-vm? (y/n)" -}}
 {{- $setup_fonts := promptString "setup fonts? (y/n)" -}}
-{{- $setup_bitwarden := promptString "setup bitwarden? (y/n)" -}}
 {{- $setup_laptop := promptString "setup laptop? (y/n)" -}}
 {{- $setup_remote_ws := promptString "setup remote-ws? (y/n)" -}}
 {{ $remote_ws_account := "" -}}
@@ -23,7 +22,6 @@
     signingkey = "signingkey_replaceme"
     setup_asdfvm = "{{ $setup_asdfvm }}"
     setup_fonts = "{{ $setup_fonts }}"
-    setup_bitwarden = "{{ $setup_bitwarden }}"
     setup_laptop = "{{ $setup_laptop }}"
 
     setup_remote_ws = "{{ $setup_remote_ws }}"
