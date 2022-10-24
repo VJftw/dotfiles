@@ -11,7 +11,7 @@ else
     "'\$HOME' is not set, skipping the creation of '\$HOME/.local/bin'."
 fi
 
-{{ if eq .chezmoi.osRelease.id "debian" }}
+{{ if eq .chezmoi.osRelease.id "ubuntu" }}
   log::info "Installing base packages."
   sudo apt-get install -y \
     vim \
