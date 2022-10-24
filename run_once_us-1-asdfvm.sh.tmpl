@@ -5,6 +5,7 @@ install_dir="${HOME}/.asdf"
 if [ ! -d "${install_dir}" ]; then
   log::info "Installing ASDF-VM."
   git clone --depth=1 https://github.com/asdf-vm/asdf.git ~/.asdf
+  export PATH="${install_dir}/bin:$PATH"
   log::success "Installed ASDF-VM."
 else
   log::info "Updating ASDF-VM."
