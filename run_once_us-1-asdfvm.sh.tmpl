@@ -1,43 +1,60 @@
 {{ if eq .setup_asdfvm "y" -}}
-#!/bin/bash
-set -euo pipefail
+{{ template "common.tmpl.sh" }}
 
 install_dir="${HOME}/.asdf"
 if [ ! -d "${install_dir}" ]; then
-    git clone --depth=1 https://github.com/asdf-vm/asdf.git ~/.asdf
+  log::info "Installing ASDF-VM."
+  git clone --depth=1 https://github.com/asdf-vm/asdf.git ~/.asdf
+  log::success "Installed ASDF-VM."
 else
-    asdf update
+  log::info "Updating ASDF-VM."
+  asdf update
+  log::success "Updated ASDF-VM."
 fi
 
 plugins=(
-    "python"
-    "terraform"
-    "helm"
-    "minikube"
-    "awscli"
-    "erlang"
-    "golang"
-    "golangci-lint"
-    "ruby"
-    "rust"
-    "shellcheck"
-    "yq"
-    "jq"
-    "kubectl"
-    "kustomize"
-    "mitmproxy"
-    "nodejs"
-    "stern"
-    "k3d"
-    "kind"
+  "awscli,latest"
+  "bitwarden,v1.22.1"
+  "erlang,none"
+  "gcloud,latest"
+  "golang,latest"
+  "helm,latest"
+  "jq,latest"
+  "k3d,latest"
+  "kind,none"
+  "kubectl,latest"
+  "kustomize,latest"
+  "minikube,none"
+  "mitmproxy,latest"
+  "nodejs,none"
+  "python,none"
+  "ruby,none"
+  "rust,none"
+  "shellcheck,latest"
+  "stern,latest"
+  "terraform,none"
+  "yq,latest"
 )
 
 for plugin in "${plugins[@]}"; do
-  if ! asdf plugin-list | grep "$plugin" > /dev/null; then
-    asdf plugin-add "$plugin"
-    # asdf install "$plugin" latest 
+  name="$(echo "$plugin" | cut -f1 -d,)"
+  version="$(echo "$plugin" | cut -f2 -d,)"
+
+  if ! asdf plugin-list | grep "$name" > /dev/null; then
+    log::info "Adding ASDF-VM plugin '$name'."
+    asdf plugin-add "$name"
+    log::success "Added ASDF-VM plugin '$name'."
+  else
+    log::info "ASDF-VM plugin '$name' already exists."
+  fi
+
+  if [[ "$version" != "none" ]]; then
+    asdf install "$name" "$version"
+    asdf global "$name" "$version"
   fi
 done
 
+log::info "Updating ASDF-VM plugins."
 asdf plugin-update --all
+log::success "Updated ASDF-VM plugins."
 {{ end -}}

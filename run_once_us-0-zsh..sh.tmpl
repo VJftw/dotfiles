@@ -1,0 +1,57 @@
+{{ if eq .chezmoi.os "linux" -}}
+{{ template "common.tmpl.sh" }}
+
+plugins=(
+  "zsh-syntax-highlighting|https://github.com/zsh-users/zsh-syntax-highlighting.git"
+  "zsh-autosuggestions|https://github.com/zsh-users/zsh-autosuggestions.git"
+  "zsh-256color|https://github.com/chrissicool/zsh-256color.git"
+)
+
+themes=(
+  "powerlevel10k|https://github.com/romkatv/powerlevel10k.git"
+)
+
+INSTALL_DIR="${HOME}/.oh-my-zsh"
+PLUGINS_DIR="${INSTALL_DIR}/custom/plugins"
+THEMES_DIR="${INSTALL_DIR}/custom/themes"
+
+if [ ! -d "$INSTALL_DIR" ]; then
+  log::info "Installing Oh My ZSH."
+  git clone --depth=1 \
+    "https://github.com/robbyrussell/oh-my-zsh.git" \
+    "${HOME}/.oh-my-zsh"
+  log::success "Installed Oh My ZSH."
+else
+  log::info "Oh My ZSH is already installed."
+fi
+
+for plugin in "${plugins[@]}"; do
+  name=$(echo "${plugin}" | cut -d\| -f1)
+  repo=$(echo "${plugin}" | cut -d\| -f2)
+
+  if [ ! -d "${PLUGINS_DIR}/${name}" ]; then
+    log::info "Installing Oh My ZSH Plugin '${name}'."
+    git clone --depth=1 \
+      "${repo}" \
+      "${PLUGINS_DIR}/${name}"
+  else
+    log::info "Oh My ZSH Plugin '${name}' is already installed."
+  fi
+
+done
+
+for theme in "${themes[@]}"; do
+  name=$(echo "${theme}" | cut -d\| -f1)
+  repo=$(echo "${theme}" | cut -d\| -f2)
+
+  if [ ! -d "${THEMES_DIR}/${name}" ]; then
+    log::info "Installing Oh My ZSH Theme '${name}'."
+    git clone --depth=1 \
+      "${repo}" \
+      "${THEMES_DIR}/${name}"
+  else
+    log::info "Oh My ZSH Theme '${name}' is already installed."
+  fi
+
+done
+{{ end -}}

@@ -1,6 +1,5 @@
 {{ if eq .setup_fonts "y" -}}
-#!/bin/bash
-set -euo pipefail
+{{ template "common.tmpl.sh" }}
 
 fontsPath="${HOME}/.local/share/fonts"
 

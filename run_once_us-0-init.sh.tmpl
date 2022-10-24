@@ -1,7 +1,36 @@
 {{ if eq .chezmoi.os "linux" -}}
-#!/bin/bash
-set -euo pipefail
+{{ template "common.tmpl.sh" }}
 
-mkdir -p \
-    "${HOME}/.local/bin"
+if [ -n "${HOME:-}" ]; then
+  log::info "Ensuring '\$HOME/.local/bin'."
+  mkdir -p "${HOME}/.local/bin"
+  log::success "Ensured '\$HOME/.local/bin'."
+
+else
+  log::warn \
+    "'\$HOME' is not set, skipping the creation of '\$HOME/.local/bin'."
+fi
+
+{{ if eq .chezmoi.osRelease.id "debian" }}
+  log::info "Installing base packages."
+  sudo apt-get install -y \
+    vim \
+    curl \
+    htop \
+    iotop \
+    nmap \
+    colordiff \
+    git \
+    build-essential \
+    zsh \
+    netcat
+
+  log::success "Installed base packages."
+
+  log::info "Setting ZSH as default shell."
+  sudo chsh -s "$(which zsh)" "$(id -u)"
+  log::success "Set ZSH as default shell."
+
+{{ end }}
+
 {{ end -}}

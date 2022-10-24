@@ -4,11 +4,31 @@
 {{- $setup_fonts := promptString "setup fonts? (y/n)" -}}
 {{- $setup_bitwarden := promptString "setup bitwarden? (y/n)" -}}
 {{- $setup_laptop := promptString "setup laptop? (y/n)" -}}
+{{- $setup_remote_ws := promptString "setup remote-ws? (y/n)" -}}
+{{ $remote_ws_account := "" -}}
+{{ $remote_ws_instance := "" -}}
+{{ $remote_ws_zone := "" -}}
+{{ $remote_ws_project := "" -}}
+{{ $remote_ws_hostname := "" -}}
+{{- if eq $setup_remote_ws "y" -}}
+    {{ $remote_ws_account := promptString "remote-ws account" -}}
+    {{ $remote_ws_instance := promptString "remote-ws instance" -}}
+    {{ $remote_ws_zone := promptString "remote-ws zone" -}}
+    {{ $remote_ws_project := promptString "remote-ws project" -}}
+    {{ $remote_ws_hostname := promptString "remote-ws hostname" -}}
+{{- end -}}
 [data]
     name = "{{ $name }}"
     email = "{{ $email }}"
+    signingkey = "signingkey_replaceme"
     setup_asdfvm = "{{ $setup_asdfvm }}"
     setup_fonts = "{{ $setup_fonts }}"
     setup_bitwarden = "{{ $setup_bitwarden }}"
     setup_laptop = "{{ $setup_laptop }}"
-    signingkey = "signingkey_replaceme"
+
+    setup_remote_ws = "{{ $setup_remote_ws }}"
+    remote_ws_account = "{{ default "" $remote_ws_account }}"
+    remote_ws_instance = "{{ default "" $remote_ws_instance }}"
+    remote_ws_zone = "{{ default "" $remote_ws_zone }}"
+    remote_ws_project = "{{ default "" $remote_ws_project }}"
+    remote_ws_hostname = "{{ default "" $remote_ws_hostname }}"

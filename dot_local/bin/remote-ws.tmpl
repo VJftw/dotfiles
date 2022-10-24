@@ -1,0 +1,33 @@
+{{ if eq .setup_remote_ws "y" -}}
+{{ template "common.tmpl.sh" }}
+
+target_account="{{ .remote_ws_account }}"
+target_instance="{{ .remote_ws_instance }}"
+target_zone="{{ .remote_ws_zone }}"
+target_project="{{ .remote_ws_project }}"
+target_hostname="{{ .remote_ws_hostname }}"
+
+echo "-> Configuring auth..."
+current_account="$(gcloud auth list 2>&1 | grep "*" | awk '{ print $2 }')"
+if [ "$current_account" != "$target_account" ]; then
+    echo "-> Setting active account to '$target_account' (currently '$current_account')..."
+    gcloud config set account "$target_account" 2>&1 | sed 's/^/    /g'
+fi
+
+echo "-> Starting instance"
+gcloud \
+    --project "$target_project" \
+    compute instances start \
+    --zone "$target_zone" \
+    "$target_instance" \
+    2>&1 | sed 's/^/    /g'
+
+if [ "$current_account" != "$target_account" ]; then
+    echo "-> Setting active account back to '$current_account'..."
+    gcloud config set account "$current_account" 2>&1 | sed 's/^/    /g'
+fi
+
+until nc -vz "$target_hostname" 22 -w 1; do
+    true
+done
+{{ end }}
