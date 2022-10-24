@@ -28,7 +28,7 @@ fi
   log::success "Installed base packages."
 
   log::info "Setting ZSH as default shell."
-  sudo chsh -s "$(which zsh)" "$(id -u)"
+  sudo chsh -s "$(which zsh)" "$(whoami)"
   log::success "Set ZSH as default shell."
 
 {{ end }}
