@@ -26,3 +26,11 @@
 
 [fetch]
         prune = true
+
+; always use git+ssh for GitHub.
+[url "git@github.com:"]
+        insteadOf = https://github.com/
+
+; Always sign commits
+[commit]
+        gpgsign = true
