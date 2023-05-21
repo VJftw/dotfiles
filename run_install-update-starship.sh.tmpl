@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "linux" -}}
+{{ template "common.tmpl.sh" }}
+
+# Install/Update Starship
+curl -sS "https://starship.rs/install.sh" | sh
+
+{{ end -}}
