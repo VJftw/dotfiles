@@ -22,15 +22,15 @@ fi
     colordiff \
     git \
     build-essential \
-    zsh \
+    fish \
     netcat \
     unzip
 
   log::success "Installed base packages."
 
-  log::info "Setting ZSH as default shell."
-  sudo chsh -s "$(which zsh)" "$(whoami)"
-  log::success "Set ZSH as default shell."
+  log::info "Setting fish as default shell."
+  sudo chsh -s "$(which fish)" "$(whoami)"
+  log::success "Set fish as default shell."
 
 {{ end }}
 

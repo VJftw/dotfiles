@@ -2,6 +2,8 @@
 {{ template "common.tmpl.sh" }}
 
 # Install/Update Starship
-curl -sS "https://starship.rs/install.sh" | sh
+export BIN_DIR="$HOME/.local/bin"
+
+curl -sS "https://starship.rs/install.sh" | sh -s -- --force
 
 {{ end -}}
