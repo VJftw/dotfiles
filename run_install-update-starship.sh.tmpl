@@ -1,9 +1,0 @@
-{{ if eq .chezmoi.os "linux" -}}
-{{ template "common.tmpl.sh" }}
-
-# Install/Update Starship
-export BIN_DIR="$HOME/.local/bin"
-
-curl -sS "https://starship.rs/install.sh" | sh -s -- --force
-
-{{ end -}}

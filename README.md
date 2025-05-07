@@ -3,13 +3,8 @@
 Managed by [chezmoi](https://chezmoi.io).
 
 ```sh
-chezmoi init https://github.com/VJftw/dotfiles.git
-
-chezmoi apply -v
-```
-
-## Kernelspace installing
-```sh
-bash $HOME/.vjftw-ws-setup/kernelspace/base.sh
-...
+# Note: Always verify what a shell script from the internet does before running it.
+curl -L https://get.chezmoi.io > chezmoi.sh
+less chezmoi.sh
+sh chezmoi.sh -b "$HOME/.local/bin" -- init --apply VJftw
 ```
