@@ -11,10 +11,13 @@ def setup_micro [] {
 	let version = "2.0.14"
 	let os = $nu.os-info.name
 	let arch = match $nu.os-info.arch {
-		"aarch64" => 'arm64'
+	    # micro-2.0.14-linux-arm64
+		"aarch64" => '-arm64'
+		# micro-2.0.14-linux64
+		"x86_64" => '64'
 	}
 
-	let releaseName = $"micro-($version)-($os)-($arch)"
+	let releaseName = $"micro-($version)-($os)($arch)"
 	http get $"https://github.com/zyedidia/micro/releases/download/v($version)/($releaseName).tar.gz" | save --progress $"($releaseName).tar.gz"
 	let extractDir = [ $thirdPartyPath "github.com" "zyedidia" "micro" ] | path join
 	mkdir $extractDir
@@ -29,7 +32,10 @@ def setup_gh [] {
 	let version = "2.72.0"
 	let os = $nu.os-info.name
 	let arch = match $nu.os-info.arch {
+	    # gh_2.72.0_linux_arm64
 		"aarch64" => "arm64"
+		# gh_2.72.0_linux_amd64
+		'x86_64' => 'amd64'
 	}
 
 	let releaseName = $"gh_($version)_($os)_($arch)"
