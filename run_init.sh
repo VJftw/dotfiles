@@ -1,28 +1,44 @@
 #!/usr/bin/env sh
-set -xe
+set -xue
 
-NUSHELL_VERSION="0.104.0"
-curl -L \
-  -o "nu-${NUSHELL_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
-  "https://github.com/nushell/nushell/releases/download/${NUSHELL_VERSION}/nu-${NUSHELL_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+binPath="$HOME/.local/bin"
+thirdPartyPath="$binPath/third_party"
 
-mkdir -p "$HOME/third_party/github.com/nushell/nushell/${NUSHELL_VERSION}"
-tar -C "$HOME/third_party/github.com/nushell/nushell/${NUSHELL_VERSION}" -xvzf "nu-${NUSHELL_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+main() {
+	setup_nushell
 
-mkdir -p "$HOME/.local/bin"
-ln -s "$HOME/third_party/github.com/nushell/nushell/${NUSHELL_VERSION}/nu-${NUSHELL_VERSION}-x86_64-unknown-linux-gnu/nu" "$HOME/.local/bin/nu" || true
+	"$binPath/nu" "$HOME/.config/nushell/bootstrap.nu"
+}
 
-# TODO (in nushell):
-# - Micro (text-editor) TODO: migrate to nu.
-mkdir -p "$HOME/third_party/github.com/zyedidia/micro"
-cd "$HOME/third_party/github.com/zyedidia/micro"
-curl https://getmic.ro | bash
-ln -s "$HOME/third_party/github.com/zyedidia/micro/micro" "$HOME/.local/bin/micro" || true
+setup_nushell() {
+	version="0.104.0"
 
-"$HOME/.local/bin/nu"
+	arch="$(uname -m)"
+	os=""
+	
+	case "$(uname -o)" in
+	  GNU/Linux)
+	    os="unknown-linux-gnu"
+	  ;;
+	  *)
+	  echo "unsupported OS: $(uname -o)" 
+	  exit 1
+	  ;;
+	esac
 
-# - Starship.rs
-# - ASDF-VM
+	releaseName="nu-$version-$arch-$os"
 
+	curl -L -o "$releaseName.tar.gz" \
+	    "https://github.com/nushell/nushell/releases/download/$version/$releaseName.tar.gz"
 
+	extractDir="$thirdPartyPath/github.com/nushell/nushell"
+	mkdir -p "$extractDir"
+	tar -C "$extractDir" -xzf "$releaseName.tar.gz"
+	rm -f "$binPath/nu" "$releaseName.tar.gz"
+	ln -s "$extractDir/$releaseName/nu" "$binPath/nu" 
+}
 
+main "$@"
+
+"$HOME/.local/bin/nu" \
+	"$HOME/.config/nushell/bootstrap.nu"
