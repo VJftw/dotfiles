@@ -7,64 +7,113 @@ let thirdPartyPath = [ $binPath "third_party" ] | path join
 
 log info $"($nu.os-info.name) (($nu.os-info.arch))"
 
-def setup_micro [] {
-	let version = "2.0.14"
-	let os = $nu.os-info.name
-	let arch = match $nu.os-info.arch {
-	    # micro-2.0.14-linux-arm64
-		"aarch64" => '-arm64'
-		# micro-2.0.14-linux64
-		"x86_64" => '64'
+def install_latest_github_release [ownerRepo: string osArchConfigs: record] {
+	let ownerRepoParts = $ownerRepo | split row '/'
+	let owner: string = $ownerRepoParts | get 0
+	let repo: string = $ownerRepoParts | get 1
+
+
+	let osArch = $"($nu.os-info.name)/($nu.os-info.arch)"
+	let osArchConfig: record = $osArchConfigs | get $osArch
+	if $osArchConfig == null {
+		error make {msg: $'($osArch) is unsupported'}
 	}
 
-	let releaseName = $"micro-($version)-($os)($arch)"
-	http get $"https://github.com/zyedidia/micro/releases/download/v($version)/($releaseName).tar.gz" | save --progress $"($releaseName).tar.gz"
-	let extractDir = [ $thirdPartyPath "github.com" "zyedidia" "micro" ] | path join
-	mkdir $extractDir
-	^tar -C $extractDir -xzf $"($releaseName).tar.gz"
-	rm -f ([ $binPath "micro" ] | path join) $"($releaseName).tar.gz"
-	^ln -s ([ $extractDir $"micro-($version)" "micro" ] | path join) ([$binPath "micro"] | path join)
+	let version: string = (
+		http get $"https://api.github.com/repos/($ownerRepo)/releases/latest"
+		| get tag_name
+		| str trim --left --char 'v' # strip any 'v' prefix to get only the version numbers.
+	)
 
-	log info $"installed micro ($version)"
+	let assetName: string = $osArchConfig.assetPattern | str replace '($v)' $version
+
+	rm -f $assetName
+	http get $"https://github.com/($ownerRepo)/releases/download/v($version)/($assetName)" | save --progress $assetName
+
+	if $osArchConfig.archiveBinPathParts? != null {
+		let extractDir = [ $thirdPartyPath "github.com" $owner $repo $version ] | path join
+		mkdir $extractDir
+		^tar -C $extractDir -xzf $assetName
+
+		let binName: string = $osArchConfig.archiveBinPathParts | last
+		rm -f ([ $binPath $binName ] | path join) $assetName
+		let renderedarchiveBinPathParts: list<string> = $osArchConfig.archiveBinPathParts | each {
+			|part| $part | str replace '($v)' $version
+		}
+
+		let extractedBinPath: string = ([ $extractDir ] | append $renderedarchiveBinPathParts | path join)
+		let installPath: string = ([$binPath $binName] | path join)
+		^ln -s $extractedBinPath $installPath
+		try {
+			^$binName --version | complete
+		} catch {
+			error make {msg: $"invalid installation of ($ownerRepo)
+		Extracted Binary Path: ($extractedBinPath)
+
+		Please verify binary exists at above path.
+			"}
+		}
+	} else {
+		let binName: string = $osArchConfig.binName
+		let installedPath: string = [ $thirdPartyPath "github.com" $owner $repo $version $binName ] | path join
+		mkdir ($installedPath | path dirname)
+		mv $assetName $installedPath
+		^chmod +x $installedPath
+		rm -f ([ $binPath $binName ] | path join)
+
+		let installPath: string = ([$binPath $binName] | path join)
+		^ln -s $installedPath $installPath
+		try {
+			^$binName --version | complete
+		} catch {
+			error make {msg: $"invalid installation of ($ownerRepo)
+		Installed Binary Path: ($installedPath)
+
+		Please verify binary exists at above path.
+			"}
+		}
+	}
+
+	log info $"installed ($ownerRepo) (($version))"
 }
 
-def setup_gh [] {
-	let version = "2.72.0"
-	let os = $nu.os-info.name
-	let arch = match $nu.os-info.arch {
-	    # gh_2.72.0_linux_arm64
-		"aarch64" => "arm64"
-		# gh_2.72.0_linux_amd64
-		'x86_64' => 'amd64'
-	}
+install_latest_github_release "carapace-sh/carapace-bin" {
+	'linux/aarch64': {assetPattern: 'carapace-bin_($v)_linux_arm64.tar.gz', archiveBinPathParts: ['carapace']},
+	'linux/x86_64': {assetPattern: 'carapace-bin_($v)_linux_amd64.tar.gz', archiveBinPathParts: ['carapace']},
+}
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
+mkdir ~/.cache/carapace
+carapace _carapace nushell | save -f ($nu.data-dir | path join "vendor/autoload/carapace.nu")
 
-	let releaseName = $"gh_($version)_($os)_($arch)"
-	
-	http get $"https://github.com/cli/cli/releases/download/v($version)/($releaseName).tar.gz" | save --progress $"($releaseName).tar.gz"
-	let extractDir = [ $thirdPartyPath "github.com" "cli" "cli" ] | path join
-	mkdir $extractDir
-	^tar -C $extractDir -xzf $"($releaseName).tar.gz"
-	rm -f ([ $binPath "gh" ] | path join) $"($releaseName).tar.gz"
-	^ln -s ([ $extractDir $releaseName "bin" "gh" ] | path join) ([$binPath "gh"] | path join)
+install_latest_github_release "zyedidia/micro" {
+	'linux/aarch64': {assetPattern: 'micro-($v)-linux-arm64.tar.gz', archiveBinPathParts: ['micro-($v)', 'micro']},
+	'linux/x86_64': {assetPattern: 'micro-($v)-linux64.tar.gz', archiveBinPathParts: ['micro-($v)', 'micro']},
+}
 
-	log info $"installed gh ($version)"
+install_latest_github_release "cli/cli" {
+	'linux/aarch64': {assetPattern: 'gh_($v)_linux_arm64.tar.gz', archiveBinPathParts: ['gh_($v)_linux_arm64', 'bin', 'gh']},
+	'linux/x86_64': {assetPattern: 'gh_($v)_linux_amd64.tar.gz', archiveBinPathParts: ['gh_($v)_linux_amd64', 'bin', 'gh']},
+}
 
+let ghAuthStatus = ^gh auth status | complete
+if ghAuthStatus.exit_code == 1 {
 	(^gh auth login
-		--skip-ssh-key
-		--git-protocol https
-		--web)
+	--skip-ssh-key
+	--git-protocol https
+	--web)
 }
 
-def setup_asdfvm [] {
-	
+install_latest_github_release "version-fox/vfox" {
+	'linux/aarch64': {assetPattern: 'vfox_($v)_linux_aarch64.tar.gz', archiveBinPathParts: ['vfox_($v)_linux_aarch64', 'vfox']},
+	'linux/x86_64': {assetPattern: 'vfox_($v)_linux_x86_64.tar.gz', archiveBinPathParts: ['vfox_($v)_linux_x86_64', 'vfox']},
 }
 
-def setup_starship [] {
-	
+install_latest_github_release "JanDeDobbeleer/oh-my-posh" {
+	'linux/aarch64': {assetPattern: 'posh-linux-arm64', binName: 'oh-my-posh'},
+	'linux/x86_64': {assetPattern: 'posh-linux-amd64', binName: 'oh-my-posh'},
 }
-
-
-setup_micro
-setup_gh
-setup_asdfvm
-setup_starship
+mkdir ($nu.data-dir | path join "vendor/autoload")
+(^oh-my-posh init nu
+	--config $"($env.HOME)/.config/oh-my-posh/themes/powerlevel10k_rainbow_vjftw.omp.json"
+	--print | save -f ($nu.data-dir | path join "vendor/autoload/oh-my-posh.nu")
+)

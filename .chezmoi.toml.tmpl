@@ -1,8 +1,5 @@
 {{- $name := promptString "name" -}}
 {{- $email := promptString "email" -}}
-{{- $setup_asdfvm := promptString "setup asdf-vm? (y/n)" -}}
 [data]
     name = "{{ $name }}"
     email = "{{ $email }}"
-    signingkey = "signingkey_replaceme"
-    setup_asdfvm = "{{ $setup_asdfvm }}"

@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -xue
+set -ue
 
 binPath="$HOME/.local/bin"
 thirdPartyPath="$binPath/third_party"
@@ -7,22 +7,25 @@ thirdPartyPath="$binPath/third_party"
 main() {
 	setup_nushell
 
-	"$binPath/nu" "$HOME/.config/nushell/bootstrap.nu"
+	# "$binPath/nu" "$HOME/.config/nushell/bootstrap.nu"
 }
 
 setup_nushell() {
-	version="0.104.0"
+	version="$(curl -s https://api.github.com/repos/nushell/nushell/releases/latest | grep "tag_name" | cut -f4 -d\")"
 
 	arch="$(uname -m)"
 	os=""
-	
+
 	case "$(uname -o)" in
 	  GNU/Linux)
 	    os="unknown-linux-gnu"
 	  ;;
+    Darwin)
+      os="apple-darwin"
+    ;;
 	  *)
-	  echo "unsupported OS: $(uname -o)" 
-	  exit 1
+      echo "unsupported OS: $(uname -o)"
+      exit 1
 	  ;;
 	esac
 
@@ -31,14 +34,11 @@ setup_nushell() {
 	curl -L -o "$releaseName.tar.gz" \
 	    "https://github.com/nushell/nushell/releases/download/$version/$releaseName.tar.gz"
 
-	extractDir="$thirdPartyPath/github.com/nushell/nushell"
+	extractDir="$thirdPartyPath/github.com/nushell/nushell/$version"
 	mkdir -p "$extractDir"
 	tar -C "$extractDir" -xzf "$releaseName.tar.gz"
 	rm -f "$binPath/nu" "$releaseName.tar.gz"
-	ln -s "$extractDir/$releaseName/nu" "$binPath/nu" 
+	ln -s "$extractDir/$releaseName/nu" "$binPath/nu"
 }
 
 main "$@"
-
-"$HOME/.local/bin/nu" \
-	"$HOME/.config/nushell/bootstrap.nu"
