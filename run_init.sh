@@ -7,7 +7,7 @@ thirdPartyPath="$binPath/third_party"
 main() {
 	setup_nushell
 
-	# "$binPath/nu" "$HOME/.config/nushell/bootstrap.nu"
+	"$binPath/nu" "$HOME/.config/nushell/bootstrap.nu"
 }
 
 setup_nushell() {
