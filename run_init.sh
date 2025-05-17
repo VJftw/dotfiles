@@ -4,6 +4,8 @@ set -ue
 binPath="$HOME/.local/bin"
 thirdPartyPath="$binPath/third_party"
 
+export PATH="$PATH:$binPath"
+
 main() {
 	setup_nushell
 

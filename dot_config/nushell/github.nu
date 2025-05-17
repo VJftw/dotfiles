@@ -7,7 +7,6 @@ install_latest_github_release "cli/cli" {
 	'linux/x86_64': {assetPattern: 'gh_($v)_linux_amd64.tar.gz', archiveBinPathParts: ['gh_($v)_linux_amd64', 'bin', 'gh']},
 }
 
-^gh auth setup-git
 
 let ghAuthStatus = ^gh auth status | complete
 if ghAuthStatus.exit_code == 1 {
@@ -16,3 +15,5 @@ if ghAuthStatus.exit_code == 1 {
 	--git-protocol https
 	--web)
 }
+
+^gh auth setup-git
