@@ -17,7 +17,7 @@ def git_main_branch [] {
     for p2 in ["origin", "upstream"] {
       for p3 in ["main", "master", "trunk", "mainline", "default", "stable"] {
         let ref = $"refs/($p1)/($p2)/($p3)"
-        if (git show-ref -q --verify $ref | complete).exit_code != 0 {
+        if (git show-ref -q --verify $ref | complete).exit_code == 0 {
           return $p3
         }
       }
