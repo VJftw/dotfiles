@@ -4,6 +4,7 @@ use inc.nu install_latest_github_release
 
 log info "Setting up oh-my-posh"
 install_latest_github_release "JanDeDobbeleer/oh-my-posh" {
+        'android/aarch64': {assetPattern: 'posh-linux-arm64', binName: 'oh-my-posh'},
 	'linux/aarch64': {assetPattern: 'posh-linux-arm64', binName: 'oh-my-posh'},
 	'linux/x86_64': {assetPattern: 'posh-linux-amd64', binName: 'oh-my-posh'},
 }
@@ -15,6 +16,7 @@ mkdir ($nu.data-dir | path join "vendor/autoload")
 
 log info "Setting up Carapace completions"
 install_latest_github_release "carapace-sh/carapace-bin" {
+	'android/aarch64': {assetPattern: 'carapace-bin_($v)_linux_arm64.tar.gz', archiveBinPathParts: ['carapace']},
 	'linux/aarch64': {assetPattern: 'carapace-bin_($v)_linux_arm64.tar.gz', archiveBinPathParts: ['carapace']},
 	'linux/x86_64': {assetPattern: 'carapace-bin_($v)_linux_amd64.tar.gz', archiveBinPathParts: ['carapace']},
 }
@@ -24,6 +26,7 @@ carapace _carapace nushell | save -f ($nu.data-dir | path join "vendor/autoload/
 
 log info "Setting up Micro text-editor"
 install_latest_github_release "zyedidia/micro" {
+	'android/aarch64': {assetPattern: 'micro-($v)-linux-arm64.tar.gz', archiveBinPathParts: ['micro-($v)', 'micro']},
 	'linux/aarch64': {assetPattern: 'micro-($v)-linux-arm64.tar.gz', archiveBinPathParts: ['micro-($v)', 'micro']},
-	'linux/x86_64': {assetPattern: 'micro-($v)-linux64.tar.gz', archiveBinPathParts: ['micro-($v)', 'micro']},
+        'linux/x86_64': {assetPattern: 'micro-($v)-linux64.tar.gz', archiveBinPathParts: ['micro-($v)', 'micro']},
 }
