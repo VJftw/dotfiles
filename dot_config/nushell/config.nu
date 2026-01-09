@@ -2,11 +2,11 @@ use std/util "path add"
 
 path add "~/.local/bin"
 
-$env.config.buffer_editor = "micro"
+$env.config.buffer_editor = "hx"
 
 alias ll = ls -l
 
-# Determine Git Main Branch. 
+# Determine Git Main Branch.
 # Adapted from [ohmyzsh/ohmyzsh](https://github.com/ohmyzsh/ohmyzsh/blob/9957e4e8be9d63b9c42673f0eb86fa2dea845b32/plugins/git/git.plugin.zsh#L35-L48)
 def git_main_branch [] {
   if (git rev-parse --git-dir | complete).exit_code != 0 {

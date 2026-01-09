@@ -1,19 +1,103 @@
-#!/usr/bin/env nu
 use std log
-use inc.nu install_latest_github_release
 
-install_latest_github_release "cli/cli" {
-	'linux/aarch64': {assetPattern: 'gh_($v)_linux_arm64.tar.gz', archiveBinPathParts: ['gh_($v)_linux_arm64', 'bin', 'gh']},
-	'linux/x86_64': {assetPattern: 'gh_($v)_linux_amd64.tar.gz', archiveBinPathParts: ['gh_($v)_linux_amd64', 'bin', 'gh']},
+
+export def install_from_config [config: record] {
+	let owner = $config.owner
+	let repo = $config.repo
+	let osArchConfigs = $config.osArchConfigs
+
+	let osArch = $"($nu.os-info.name)/($nu.os-info.arch)"
+	let osArchConfig: record = $osArchConfigs
+		| get $osArch
+	if $osArchConfig == null {
+		error make {msg: $'($osArch) is unsupported'}
+	}
+
+	let assetPattern = $osArchConfig.assetPattern
+
+	let version: string = if $config.version? != null { $config.version } else {
+		get_latest_release_tag $owner $repo
+	}
+
+	let assetName: string = $assetPattern
+		| str replace '($v)' $version
+
+	let downloadedAssetPath = download_release_asset $owner $repo $version $assetName
+
+	let entrypointPath = if $osArchConfig.extractWithEntrypoint? != null {
+		extract_with_entrypoint $downloadedAssetPath ($osArchConfig.extractWithEntrypoint | str replace '($v)' $version)
+	} else {
+		$downloadedAssetPath
+	}
+
+	let binName = if $config.binName? != null { $config.binName } else {
+		$entrypointPath | path split | last
+	}
+
+	install_entrypoint_as $entrypointPath $binName
 }
 
-
-let ghAuthStatus = ^gh auth status | complete
-if ghAuthStatus.exit_code == 1 {
-	(^gh auth login
-	--skip-ssh-key
-	--git-protocol https
-	--web)
+export def get_latest_release_tag [owner: string, repo: string]: nothing -> string {
+	http get $"https://api.github.com/repos/($owner)/($repo)/releases/latest"
+	| get tag_name
+	| str trim --left --char 'v' # strip any 'v' prefix to get only the version numbers.
 }
 
-^gh auth setup-git
+export def download_release_asset [
+	owner: string, repo: string, version: string, assetName: string,
+]: nothing -> string {
+	let thirdPartyPath = [ $env.HOME ".local" "third_party" "github.com" ] | path join
+
+	let downloadPath = [ $thirdPartyPath $owner $repo $version $assetName ]
+		| path join
+	mkdir ($downloadPath | path dirname)
+
+	rm -f $downloadPath
+	http get $"https://github.com/($owner)/($repo)/releases/download/($version)/($assetName)"
+		| save --progress $downloadPath
+
+	log info $"downloaded to ($downloadPath)"
+
+	return $downloadPath
+}
+
+export def extract_with_entrypoint [archivePath: string, entrypoint: string]: nothing -> string {
+	let extractDir = $"($archivePath)_extracted"
+	log info $"creating ($extractDir)"
+
+	rm -rf $extractDir
+	mkdir $extractDir
+
+	if ($archivePath | str ends-with ".tar.gz") {
+		^tar -C $extractDir -xzf $archivePath
+	} else if ($archivePath | str ends-with ".tar.xz") {
+		^tar -C $extractDir -xf $archivePath
+	} else {
+		error make {msg: $"Unsupported archive ($archivePath)"}
+	}
+
+	log info $"extracted to ($extractDir)"
+
+	return ([ $extractDir $entrypoint ] | path join)
+}
+
+export def install_entrypoint_as [ entrypointPath: string, binName: string ] {
+	let binPath = [ $env.HOME ".local" "bin" ] | path join
+	let installPath: string = ([$binPath $binName] | path join)
+
+	^chmod +x $entrypointPath
+
+	rm -f $installPath
+	^ln -s $entrypointPath $installPath
+	log info $"linked ($installPath) to ($entrypointPath)"
+
+	try {
+		^$binName --version | complete
+	} catch {
+		error make {msg: $"invalid installation of ($binName)
+	Entrypoint Path: ($entrypointPath)
+
+	Please verify binary exists at above path.
+		"}
+	}
+}
