@@ -1,14 +1,23 @@
 #!/usr/bin/env nu
 use std log
-use inc.nu install_latest_github_release
+use github.nu
 
 export def bootstrap [] {
-    log info "Setting up oh-my-posh"
-    install_latest_github_release "JanDeDobbeleer/oh-my-posh" {
-            'android/aarch64': {assetPattern: 'posh-linux-arm64', binName: 'oh-my-posh'},
-        'linux/aarch64': {assetPattern: 'posh-linux-arm64', binName: 'oh-my-posh'},
-        'linux/x86_64': {assetPattern: 'posh-linux-amd64', binName: 'oh-my-posh'},
-    }
+    let version = (github get_latest_release_tag "JanDeDobbeleer" "oh-my-posh")
+    github install_from_config {
+		owner: "JanDeDobbeleer",
+		repo: "oh-my-posh",
+		binName: "oh-my-posh",
+        version: $"v($version)"
+		osArchConfigs: {
+			"linux/x86_64": {
+                assetPattern: "posh-linux-amd64",
+            },
+			"linux/aarch64": {
+                assetPattern: "posh-linux-arm64",
+            },
+		}
+	}
     mkdir ($nu.data-dir | path join "vendor/autoload")
     (^oh-my-posh init nu
         --config $"($env.HOME)/.config/oh-my-posh/themes/powerlevel10k_rainbow_vjftw.omp.json"
