@@ -22,6 +22,9 @@
 [fetch]
     prune = true
 
+[credential]
+	helper = cache --timeout 21600	# six hours
+
 # Allow local overriding of .gitconfig.
 [include]
     path = .local.gitconfig

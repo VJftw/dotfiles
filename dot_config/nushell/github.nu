@@ -34,7 +34,7 @@ export def install_from_config [config: record] {
 		$entrypointPath | path split | last
 	}
 
-	install_entrypoint_as $entrypointPath $binName
+	install_entrypoint_as $entrypointPath $binName (if $config.versionArg? != null { $config.versionArg } else { "--version" })
 }
 
 export def get_latest_release_tag [owner: string, repo: string]: nothing -> string {
@@ -81,7 +81,7 @@ export def extract_with_entrypoint [archivePath: string, entrypoint: string]: no
 	return ([ $extractDir $entrypoint ] | path join)
 }
 
-export def install_entrypoint_as [ entrypointPath: string, binName: string ] {
+export def install_entrypoint_as [ entrypointPath: string, binName: string, versionArg: string ] {
 	let binPath = [ $env.HOME ".local" "bin" ] | path join
 	let installPath: string = ([$binPath $binName] | path join)
 
@@ -92,7 +92,7 @@ export def install_entrypoint_as [ entrypointPath: string, binName: string ] {
 	log info $"linked ($installPath) to ($entrypointPath)"
 
 	try {
-		^$binName --version | complete
+		^$binName $versionArg | complete
 	} catch {
 		error make {msg: $"invalid installation of ($binName)
 	Entrypoint Path: ($entrypointPath)
