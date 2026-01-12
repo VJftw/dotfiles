@@ -43,6 +43,13 @@ export def get_latest_release_tag [owner: string, repo: string]: nothing -> stri
 	| str trim --left --char 'v' # strip any 'v' prefix to get only the version numbers.
 }
 
+export def get_newest_release_tag [owner: string, repo: string]: nothing -> string {
+	http get $"https://api.github.com/repos/($owner)/($repo)/releases"
+	| first
+	| get tag_name
+	| str trim --left --char 'v' # strip any 'v' prefix to get only the version numbers.
+}
+
 export def download_release_asset [
 	owner: string, repo: string, version: string, assetName: string,
 ]: nothing -> string {
@@ -72,6 +79,8 @@ export def extract_with_entrypoint [archivePath: string, entrypoint: string]: no
 		^tar -C $extractDir -xzf $archivePath
 	} else if ($archivePath | str ends-with ".tar.xz") {
 		^tar -C $extractDir -xf $archivePath
+	} else if ($archivePath | str ends-with ".zst") {
+		^unzstd --output-dir-flat $extractDir $archivePath
 	} else {
 		error make {msg: $"Unsupported archive ($archivePath)"}
 	}
