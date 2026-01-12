@@ -13,10 +13,7 @@ export def ensure_local_gitconfig_property [property: string] {
     }
 }
 
-export def bootstrap [] {
-    ensure_local_gitconfig_property "user.name"
-    ensure_local_gitconfig_property "user.email"
-
+export def setup_git_oauth_credential_helper [ ] {
     let version = (github get_latest_release_tag "hickford" "git-credential-oauth")
     github install_from_config {
 		owner: "hickford",
@@ -38,6 +35,13 @@ export def bootstrap [] {
     if (^git config -f ~/.local.gitconfig --get-all credential.helper | lines -s | where $it == "oauth" | is-empty) {
         ^git config -f ~/.local.gitconfig --add credential.helper oauth
     }
+}
+
+export def bootstrap [] {
+    ensure_local_gitconfig_property "user.name"
+    ensure_local_gitconfig_property "user.email"
+
+    setup_git_oauth_credential_helper
 }
 
 def main [] {
