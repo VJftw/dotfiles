@@ -5,6 +5,9 @@ export def install_from_config [config: record] {
 	let owner = $config.owner
 	let repo = $config.repo
 	let osArchConfigs = $config.osArchConfigs
+	let versionArg: string = if $config.versionArg? != null { $config.versionArg } else { "--version" }
+	let binPath = [ $env.HOME ".local" "bin" ] | path join
+
 
 	let osArch = $"($nu.os-info.name)/($nu.os-info.arch)"
 	let osArchConfig: record = $osArchConfigs
@@ -13,12 +16,28 @@ export def install_from_config [config: record] {
 		error make {msg: $'($osArch) is unsupported'}
 	}
 
-	let assetPattern = $osArchConfig.assetPattern
-
 	let version: string = if $config.version? != null { $config.version } else {
 		get_latest_release_tag $owner $repo
 	}
 
+	let binName = if $config.binName? != null { $config.binName } else {
+		($osArchConfig.extractWithEntrypoint | str replace '($v)' $version) | path split | last
+	}
+
+	let binPath = [ $binPath, $binName ] | path join
+	if ($binPath | path exists) {
+		let versionRegex = if $config.versionRegex? != null { (['(', $config.versionRegex, ')'] | str join) } else { '(\d+\.\d+\.\d+)' }
+		let currentVersion = ^$binPath $versionArg | complete | get stdout | parse --regex $versionRegex | first | get --optional capture0 | default 'none'
+		log info $"version: ($version)"
+		let parsedVersion = $version | parse --regex $versionRegex | first | get --optional capture0 | default 'none'
+		log info $"latest ($binName) version: ($parsedVersion) \(current: ($currentVersion)\)"
+
+		if ($parsedVersion == $currentVersion) {
+			return
+		}
+	}
+
+	let assetPattern = $osArchConfig.assetPattern
 	let assetName: string = $assetPattern
 		| str replace '($v)' $version
 
@@ -30,11 +49,7 @@ export def install_from_config [config: record] {
 		$downloadedAssetPath
 	}
 
-	let binName = if $config.binName? != null { $config.binName } else {
-		$entrypointPath | path split | last
-	}
-
-	install_entrypoint_as $entrypointPath $binName (if $config.versionArg? != null { $config.versionArg } else { "--version" })
+	install_entrypoint_as $entrypointPath $binName $versionArg
 }
 
 export def get_latest_release_tag [owner: string, repo: string]: nothing -> string {

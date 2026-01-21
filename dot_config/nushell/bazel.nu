@@ -22,12 +22,22 @@ export def install_bazelisk [ ] {
 		owner: "bazelbuild",
 		repo: "bazelisk",
 		version: $"v($version)",
-		binName: "bazel",
+		versionArg: "version",
+		binName: "bazelisk",
 		osArchConfigs: {
 			"linux/x86_64": {assetPattern: "bazelisk-linux-amd64"},
 			"linux/aarch64": {assetPattern: "bazelisk-linux-arm64"},
 		}
 	}
+
+echo `
+def --wrapped bazelisk [...rest] {
+  ^bazelisk ...$rest
+}
+
+alias bazel = bazelisk
+alias bzl = bazel
+` | save -f ($nu.data-dir | path join "vendor/autoload/bazel.nu")
 }
 
 export def bootstrap [] {

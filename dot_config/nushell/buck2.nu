@@ -9,6 +9,7 @@ export def bootstrap [] {
 		repo: "buck2",
 		binName: "buck2",
         version: $version,
+        versionRegex: '\d+\-\d+\-\d+',
 		osArchConfigs: {
 			"linux/x86_64": {
                 assetPattern: "buck2-x86_64-unknown-linux-gnu.zst",
@@ -20,6 +21,12 @@ export def bootstrap [] {
             },
 		}
 	}
+
+echo `
+def --wrapped buck2 [...rest] {
+  ^buck2 ...$rest
+}
+` | save -f ($nu.data-dir | path join "vendor/autoload/buck2.nu")
 }
 
 def main [] {

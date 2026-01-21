@@ -27,23 +27,8 @@ def git_main_branch [] {
   return "master"
 }
 
-def --wrapped bazel [...rest] {
-  ^bazel ...$rest
-}
-
-def --wrapped buck2 [...rest] {
-  ^buck2 ...$rest
-}
-
-def --wrapped please [...rest] {
-  ^please ...$rest
-}
-
 alias gst = git status
 alias gco = git checkout
 alias gcm = gco (git_main_branch)
 
 alias k = kubectl
-
-alias bzl = bazel
-alias plz = please

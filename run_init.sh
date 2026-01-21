@@ -6,6 +6,10 @@ thirdPartyPath="$binPath/third_party"
 
 export PATH="$PATH:$binPath"
 
+log() {
+	>&2 printf '%s\n' "$@"
+}
+
 main() {
 	setup_nushell
 
@@ -18,6 +22,16 @@ setup_nushell() {
     extraCurlFlags+=("--header" "Authorization: Bearer $GITHUB_TOKEN")
   fi
 	version="$(curl -s "${curlFlags[@]}" https://api.github.com/repos/nushell/nushell/releases/latest | grep "tag_name" | cut -f4 -d\")"
+
+	currentVersion=""
+	if [ -f "$binPath/nu" ]; then
+		currentVersion="$("$binPath/nu" --version)"
+	fi
+
+	log "latest nushell version: $version (current: $currentVersion)"
+	if [[ "$currentVersion" == "$version" ]]; then
+		return
+	fi
 
 	arch="$(uname -m)"
 	os=""

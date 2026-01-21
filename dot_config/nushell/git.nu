@@ -18,7 +18,7 @@ export def setup_git_oauth_credential_helper [ ] {
     github install_from_config {
 		owner: "hickford",
 		repo: "git-credential-oauth",
-        version: $"v($version)"
+        version: $"v($version)",
         versionArg: "version",
 		osArchConfigs: {
 			"linux/x86_64": {
