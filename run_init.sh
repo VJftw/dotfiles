@@ -11,9 +11,22 @@ log() {
 }
 
 main() {
-	setup_nushell
+	# setup_nushell
+	# "$binPath/nu" "$HOME/.config/nushell/bootstrap.nu"
 
-	"$binPath/nu" "$HOME/.config/nushell/bootstrap.nu"
+  setup_bash
+}
+
+setup_bash() {
+  # ensure block in bashrc
+  if ! grep ".bashrc.d/" "$HOME/.bashrc"; then
+    cat <<'EOF' >> "$HOME/.bashrc"
+
+for file in ~/.bashrc.d/*.bashrc; do
+  source "$file"
+done
+EOF
+  fi
 }
 
 setup_nushell() {
