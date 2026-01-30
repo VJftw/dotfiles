@@ -1,4 +1,3 @@
-#!/usr/bin/env nu
 use std log
 use github.nu
 

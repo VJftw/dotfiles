@@ -1,15 +1,19 @@
-#!/usr/bin/env nu
 use std log
 use github.nu
 
+def local_git_config [] {
+    return ([$env.HOME, .local.gitconfig] | path join)
+}
+
 export def ensure_local_gitconfig_property [property: string] {
-    let existingValue = (^git config get -f ~/.local.gitconfig $property)
+    let localGitConfig = local_git_config
+    let existingValue = (^git config get -f ($localGitConfig) $property)
     if ($existingValue | is-empty) {
-        log info $'Enter new value for ($property) in ~/.local.gitconfig:'
+        log info $'Enter new value for ($property) in ($localGitConfig):'
         let value = (input)
-        ^git config set -f ~/.local.gitconfig $property $value
+        ^git config set -f $localGitConfig $property $value
     } else {
-        log info $'($property) already set in ~/.local.gitconfig as "($existingValue)"'
+        log info $'($property) already set in ($localGitConfig) as "($existingValue)"'
     }
 }
 
@@ -32,8 +36,9 @@ export def setup_git_oauth_credential_helper [ ] {
 		}
 	}
 
-    if (^git config -f ~/.local.gitconfig --get-all credential.helper | lines -s | where $it == "oauth" | is-empty) {
-        ^git config -f ~/.local.gitconfig --add credential.helper oauth
+    let localGitConfig = local_git_config
+    if (^git config -f ($localGitConfig) --get-all credential.helper | lines -s | where $it == "oauth" | is-empty) {
+        ^git config -f ($localGitConfig) --add credential.helper oauth
     }
 }
 
@@ -41,26 +46,10 @@ export def bootstrap [] {
     ensure_local_gitconfig_property "user.name"
     ensure_local_gitconfig_property "user.email"
 
-    setup_git_oauth_credential_helper
+    # setup_git_oauth_credential_helper
 
-    echo `
-def --wrapped git [...rest] {
-    if $rest == ["log"] {
-        # From: https://www.nushell.sh/cookbook/parsing_git_log.html
-        ^git log --pretty=%H»¦«%s»¦«%aN»¦«%aE»¦«%aD -n 25 |
-            lines |
-            split column "»¦«" commit subject name email date |
-            upsert date {|d| $d.date | into datetime} |
-            sort-by date |
-            reverse |
-            explore
-
-        return
-    }
-
-    ^git ...$rest
-}
-` | save -f ($nu.data-dir | path join "vendor/autoload/git.nu")
+    const vendor_autoload_path = path self ([vendor, autoload, git.nu] | path join)
+    cp ($vendor_autoload_path) ([$nu.data-dir, vendor, autoload, git.nu] | path join)
 }
 
 def main [] {

@@ -1,4 +1,3 @@
-#!/usr/bin/env nu
 use std log
 use github.nu
 
@@ -21,13 +20,8 @@ export def bootstrap [] {
 		}
 	}
 
-echo `
-def --wrapped plz [...rest] {
-  ^plz ...$rest
-}
-
-alias please = plz
-` | save -f ($nu.data-dir | path join "vendor/autoload/please.nu")
+    const vendor_autoload_path = path self ([vendor, autoload, please.nu] | path join)
+    cp ($vendor_autoload_path) ([$nu.data-dir, vendor, autoload, please.nu] | path join)
 }
 
 def main [] {

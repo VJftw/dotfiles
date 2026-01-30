@@ -1,4 +1,3 @@
-#!/usr/bin/env nu
 use std log
 use github.nu
 
@@ -30,14 +29,8 @@ export def install_bazelisk [ ] {
 		}
 	}
 
-echo `
-def --wrapped bazelisk [...rest] {
-  ^bazelisk ...$rest
-}
-
-alias bazel = bazelisk
-alias bzl = bazel
-` | save -f ($nu.data-dir | path join "vendor/autoload/bazel.nu")
+	const vendor_autoload_path = path self ([vendor, autoload, bazel.nu] | path join)
+    cp ($vendor_autoload_path) ([$nu.data-dir, vendor, autoload, bazel.nu] | path join)
 }
 
 export def bootstrap [] {

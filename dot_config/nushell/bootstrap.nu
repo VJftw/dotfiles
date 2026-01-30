@@ -1,4 +1,3 @@
-#!/usr/bin/env nu
 use std log
 use git.nu
 use oh-my-posh.nu
@@ -8,7 +7,6 @@ use vscode.nu
 
 hx bootstrap
 
-# Ensure minimum ~/.local.gitconfig
 git bootstrap
 
 oh-my-posh bootstrap

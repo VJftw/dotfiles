@@ -1,4 +1,3 @@
-#!/usr/bin/env nu
 use std log
 use github.nu
 
@@ -18,10 +17,13 @@ export def bootstrap [] {
             },
 		}
 	}
-    mkdir ($nu.data-dir | path join "vendor/autoload")
+
+    mkdir ([$nu.data-dir, vendor, autoload] | path join)
+
     (^oh-my-posh init nu
-        --config $"($env.HOME)/.config/oh-my-posh/themes/powerlevel10k_rainbow_vjftw.omp.json"
-        --print | save -f ($nu.data-dir | path join "vendor/autoload/oh-my-posh.nu")
+        --config ([$env.HOME, .config, oh-my-posh, themes, powerlevel10k_rainbow_vjftw.omp.json] | path join)
+        --print |
+        save -f ([$nu.data-dir, vendor, autoload, oh-my-posh.nu] | path join)
     )
 }
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env nu
 use std log
 use github.nu
 
@@ -22,8 +21,8 @@ export def bootstrap [] {
 	}
 
     $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
-    mkdir ~/.cache/carapace
-    carapace _carapace nushell | save -f ($nu.data-dir | path join "vendor/autoload/carapace.nu")
+    mkdir ([$env.HOME, .cache, carapace] | path join)
+    carapace _carapace nushell | save -f ([$nu.data-dir, vendor, autoload, carapace.nu] | path join)
 }
 
 def main [] {

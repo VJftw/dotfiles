@@ -1,4 +1,3 @@
-#!/usr/bin/env nu
 use std log
 use github.nu
 
@@ -22,11 +21,8 @@ export def bootstrap [] {
 		}
 	}
 
-echo `
-def --wrapped buck2 [...rest] {
-  ^buck2 ...$rest
-}
-` | save -f ($nu.data-dir | path join "vendor/autoload/buck2.nu")
+    const vendor_autoload_path = path self ([vendor, autoload, buck2.nu] | path join)
+    cp ($vendor_autoload_path) ([$nu.data-dir, vendor, autoload, buck2.nu] | path join)
 }
 
 def main [] {
