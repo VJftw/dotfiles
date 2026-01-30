@@ -42,6 +42,25 @@ export def bootstrap [] {
     ensure_local_gitconfig_property "user.email"
 
     setup_git_oauth_credential_helper
+
+    echo `
+def --wrapped git [...rest] {
+    if $rest == ["log"] {
+        # From: https://www.nushell.sh/cookbook/parsing_git_log.html
+        ^git log --pretty=%H»¦«%s»¦«%aN»¦«%aE»¦«%aD -n 25 |
+            lines |
+            split column "»¦«" commit subject name email date |
+            upsert date {|d| $d.date | into datetime} |
+            sort-by date |
+            reverse |
+            explore
+
+        return
+    }
+
+    ^git ...$rest
+}
+` | save -f ($nu.data-dir | path join "vendor/autoload/git.nu")
 }
 
 def main [] {
