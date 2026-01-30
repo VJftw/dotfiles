@@ -28,6 +28,7 @@ export def bootstrap [ ] {
         upsert "terminal.integrated.shellIntegration.history" 0 |
         upsert "terminal.integrated.shellIntegration.quickFixEnabled" false |
         upsert "terminal.integrated.shellIntegration.showCommandGuide" false |
+        upsert "workbench.iconTheme" "vscode-icons" |
         upsert "workbench.secondarySideBar.defaultVisibility" "hidden" |
         save --force $settings_path
 
