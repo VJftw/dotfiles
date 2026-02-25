@@ -1,3 +1,4 @@
+@complete external
 def --wrapped git [...rest] {
     if $rest == ["log"] {
         # From: https://www.nushell.sh/cookbook/parsing_git_log.html

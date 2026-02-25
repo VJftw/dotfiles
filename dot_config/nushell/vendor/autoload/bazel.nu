@@ -1,6 +1,6 @@
-def --wrapped bazelisk [...rest] {
+@complete external
+def --wrapped bazel [...rest] {
   ^bazelisk ...$rest
 }
 
-alias bazel = bazelisk
 alias bzl = bazel
