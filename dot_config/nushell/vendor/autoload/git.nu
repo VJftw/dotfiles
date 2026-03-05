@@ -6,7 +6,6 @@ def --wrapped git [...rest] {
             lines |
             split column "»¦«" commit subject name email date |
             upsert date {|d| $d.date | into datetime} |
-            reverse |
             explore
 
         return
