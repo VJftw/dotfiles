@@ -40,13 +40,14 @@ export def setup_git_oauth_credential_helper [ ] {
     if (^git config -f ($localGitConfig) --get-all credential.helper | lines -s | where $it == "oauth" | is-empty) {
         ^git config -f ($localGitConfig) --add credential.helper oauth
     }
+    ^git config -f ($localGitConfig) --add credential.oauthRedirectURL http://127.0.0.1:54541
 }
 
 export def bootstrap [] {
     ensure_local_gitconfig_property "user.name"
     ensure_local_gitconfig_property "user.email"
 
-    # setup_git_oauth_credential_helper
+    setup_git_oauth_credential_helper
 
     const vendor_autoload_path = path self ([vendor, autoload, git.nu] | path join)
     cp ($vendor_autoload_path) ([$nu.data-dir, vendor, autoload, git.nu] | path join)
