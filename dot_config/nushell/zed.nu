@@ -13,24 +13,39 @@ export def bootstrap [ ] {
     }
 
     open $settings_path |
+    upsert "title_bar" {
+        "show_sign_in": false,
+    } |
     upsert "disable_ai" true |
-    upsert "git.inline_blame.show_commit_summary" true |
-    upsert "terminal.toolbar.breadcrumbs" false |
-    upsert "terminal.copy_on_select" true |
-    upsert "terminal.cursor_shape" 'bar' |
-    upsert "terminal.shell" 'bar' |
+    upsert "git" {
+        "inline_blame": {
+            "show_commit_summary": true,
+        }
+    } |
+    upsert "terminal" {
+        "copy_on_select": true,
+        "cursor_shape": 'bar',
+        "shell": 'system',
+        "toolbar": {
+            "breadcrumbs": false,
+        }
+   } |
     upsert "buffer_line_height" 'comfortable' |
     upsert "buffer_font_weight" 400.0 |
     upsert "buffer_font_family" 'SauceCodePro NFM' |
-    upsert "icon_theme.mode" 'system' |
-    upsert "icon_theme.light" 'Catppuccin Frappé' |
-    upsert "icon_theme.dark" 'Catppuccin Macchiato' |
+    upsert "icon_theme" {
+        "mode": 'system',
+        "light": 'Catppuccin Frappé',
+        "dark": 'Catppuccin Macchiato',
+    } |
     upsert "base_keymap" 'VSCode' |
     upsert "ui_font_size" 16 |
     upsert "buffer_font_size" 12.0 |
-    upsert "theme.mode" 'system' |
-    upsert "theme.light" 'Catppuccin Frappé' |
-    upsert "theme.dark" 'Catppuccin Macchiato' |
+    upsert "theme" {
+        "mode": 'system',
+        "light": 'Catppuccin Frappé',
+        "dark": 'Catppuccin Macchiato',
+    } |
     upsert "auto_install_extensions" {
         'html': true,
         'dockerfile': true,
