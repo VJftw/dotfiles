@@ -19,6 +19,9 @@ export def bootstrap [] {
             },
 		}
 	}
+
+	log info "adding vfox to autoload"
+	^vfox activate nushell $nu.default-config-dir | save --force ([$nu.data-dir, vendor, autoload, vfox.nu] | path join)
 }
 
 def main [] {
