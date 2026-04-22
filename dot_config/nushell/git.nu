@@ -1,5 +1,4 @@
 use std log
-use github.nu
 
 def local_git_config [] {
     return ([$env.HOME, .local.gitconfig] | path join)
@@ -7,7 +6,7 @@ def local_git_config [] {
 
 export def ensure_local_gitconfig_property [property: string] {
     let localGitConfig = local_git_config
-    let existingValue = (^git config get -f ($localGitConfig) $property | complete | get stdout)
+    let existingValue = (^git config get -f ($localGitConfig) $property | complete | get stdout | str trim)
     if ($existingValue | is-empty) {
         log info $'Enter new value for ($property) in ($localGitConfig):'
         let value = (input)
@@ -18,23 +17,7 @@ export def ensure_local_gitconfig_property [property: string] {
 }
 
 export def setup_git_oauth_credential_helper [ ] {
-    let version = (github get_latest_release_tag "hickford" "git-credential-oauth")
-    github install_from_config {
-		owner: "hickford",
-		repo: "git-credential-oauth",
-        version: $"v($version)",
-        versionArg: "version",
-		osArchConfigs: {
-			"linux/x86_64": {
-                assetPattern: $"git-credential-oauth_($version)_linux_amd64.tar.gz",
-                extractWithEntrypoint: "git-credential-oauth",
-            },
-			"linux/aarch64": {
-                assetPattern: $"git-credential-oauth_($version)_linux_arm64.tar.gz",
-                extractWithEntrypoint: "git-credential-oauth",
-            },
-		}
-	}
+    mise use --global github:hickford/git-credential-oauth
 
     let localGitConfig = local_git_config
     if (^git config -f ($localGitConfig) --get-all credential.helper | complete | get stdout | lines -s | where $it == "oauth" | is-empty) {

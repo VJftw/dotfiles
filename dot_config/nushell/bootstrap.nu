@@ -1,17 +1,14 @@
 use std log
-use git.nu
-use oh-my-posh.nu
-use carapace.nu
 use hx.nu
-use vfox.nu
+use git.nu
+use carapace.nu
+use oh-my-posh.nu
 
 mkdir ([$nu.data-dir, vendor, autoload] | path join)
 
-vfox bootstrap
+source ([$nu.data-dir, vendor, autoload, mise.nu] | path join)
 
 hx bootstrap
-
 git bootstrap
-
-oh-my-posh bootstrap
 carapace bootstrap
+oh-my-posh bootstrap

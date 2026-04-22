@@ -2,63 +2,16 @@
 set -Eeuo pipefail
 
 binPath="$HOME/.local/bin"
-thirdPartyPath="$binPath/third_party"
+export PATH="$binPath:$PATH"
 
-export PATH="$PATH:$binPath"
+if ! command -v mise >/dev/null 2>&1; then
+  curl https://mise.run | MISE_INSTALL_PATH="$binPath/mise" sh
+fi
 
-log() {
-	>&2 printf '%s\n' "$@"
-}
+mise use --global github:nushell/nushell
+mise tool-alias set nu github:nushell/nushell
 
-main() {
-	setup_nushell
+mise exec nu -- nu --commands 'mise activate nu --shims | save --force ([$nu.data-dir, vendor, autoload, mise.nu] | path join)'
+mise exec nu -- nu ~/.config/nushell/bootstrap.nu
 
-	"$binPath/nu" "$HOME/.config/nushell/bootstrap.nu"
-}
-
-setup_nushell() {
-  extraCurlFlags=()
-  if [ -n "${GITHUB_TOKEN:-}" ]; then
-    extraCurlFlags+=("--header" "Authorization: Bearer $GITHUB_TOKEN")
-  fi
-	version="$(curl -s "${curlFlags[@]}" https://api.github.com/repos/nushell/nushell/releases/latest | grep "tag_name" | cut -f4 -d\")"
-
-	currentVersion=""
-	if [ -f "$binPath/nu" ]; then
-		currentVersion="$("$binPath/nu" --version)"
-	fi
-
-	log "latest nushell version: $version (current: $currentVersion)"
-	if [[ "$currentVersion" == "$version" ]]; then
-		return
-	fi
-
-	arch="$(uname -m)"
-	os=""
-
-	case "$(uname -o)" in
-	  GNU/Linux)
-	    os="unknown-linux-gnu"
-	  ;;
-    Darwin)
-      os="apple-darwin"
-    ;;
-	  *)
-      echo "unsupported OS: $(uname -o)"
-      exit 1
-	  ;;
-	esac
-
-	releaseName="nu-$version-$arch-$os"
-  set -x
-	curl -L -o "$releaseName.tar.gz" \
-	    "https://github.com/nushell/nushell/releases/download/$version/$releaseName.tar.gz"
-  set +x
-	extractDir="$thirdPartyPath/github.com/nushell/nushell/$version"
-	mkdir -p "$extractDir"
-	tar -C "$extractDir" -xzf "$releaseName.tar.gz"
-	rm -f "$binPath/nu" "$releaseName.tar.gz"
-	ln -s "$extractDir/$releaseName/nu" "$binPath/nu"
-}
-
-main "$@"
+printf 'Use\n\tmise exec nu -- nu\n'

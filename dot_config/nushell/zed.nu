@@ -1,6 +1,10 @@
 use std log
 
 export def bootstrap [ ] {
+    mise use --global github:zed-industries/zed
+    mise tool-alias set zed github:zed-industries/zed
+
+
     let settings_paths = match $nu.os-info.name {
         "linux" => [([$env.HOME, .config, zed, settings.json] | path join), /home/vjftw/.var/app/dev.zed.Zed/config/zed/settings.json],
         "windows" => [([$env.APPDATA, Roaming, Zed, settings.json] | path join)],
