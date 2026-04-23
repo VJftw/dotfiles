@@ -1,0 +1,6 @@
+[tasks.distrobox_citrix-zoom]
+description = "Add Distrobox citrix-zoom"
+run = [
+    "podman build . -f citrix-zoom.Containerfile -t citrix-zoom:latest",
+    "distrobox assemble create --file citrix-zoom.ini"
+]

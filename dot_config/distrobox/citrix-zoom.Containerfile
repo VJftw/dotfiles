@@ -1,4 +1,3 @@
-# podman build ~/.config/distrobox -f citrix-zoom.Containerfile -t citrix-zoom:latest
 FROM ghcr.io/ublue-os/ubuntu-toolbox:latest
 ARG ZOOM_VDI_PLUGIN_VERSION="6.4.17.26900"
 
