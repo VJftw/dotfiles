@@ -11,6 +11,7 @@ fi
 mise use --global github:nushell/nushell
 mise tool-alias set nu github:nushell/nushell
 
+mise exec nu -- nu --commands 'mkdir ([$nu.data-dir, vendor, autoload] | path join)'
 mise exec nu -- nu --commands 'mise activate nu --shims | save --force ([$nu.data-dir, vendor, autoload, mise.nu] | path join)'
 mise exec nu -- nu ~/.config/nushell/bootstrap.nu
 
