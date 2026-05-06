@@ -1,6 +1,8 @@
 use std log
+use mise.nu
 
 export def bootstrap [ ] {
+    let shim_dir = mise shim_dir
     for settings_path in (settings_paths) {
         if not ($settings_path | path exists) {
             mkdir ($settings_path | path dirname)
@@ -22,7 +24,7 @@ export def bootstrap [ ] {
         upsert "terminal.integrated.fontFamily" "'SauceCodePro Nerd Font Mono', SauceCodePro, 'SauceCodePro Nerd Font', 'SauceCodePro NF', Consolas, 'Courier New', monospace" |
         upsert "terminal.integrated.fontLigatures.enabled" true |
         upsert "terminal.integrated.localEchoLatencyThreshold" (-1) |
-        upsert "terminal.integrated.profiles.linux"."nushell (login)" {'path': $nu.current-exe,'args': ['--login']} |
+        upsert "terminal.integrated.profiles.linux"."nushell (login)" {'path': ([$shim_dir, nu] | path join),'args': ['--login']} |
         upsert "terminal.integrated.shellIntegration.decorationsEnabled" "never" |
         upsert "terminal.integrated.shellIntegration.enabled" false |
         upsert "terminal.integrated.shellIntegration.history" 0 |

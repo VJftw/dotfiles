@@ -1,15 +1,21 @@
 use std log
+use mise.nu
 
 export def bootstrap [ ] {
-    mise use --global github:zed-industries/zed
-    mise tool-alias set zed github:zed-industries/zed
+    ^mise use --global github:zed-industries/zed
+    ^mise tool-alias set zed github:zed-industries/zed
 
 
     let settings_paths = match $nu.os-info.name {
-        "linux" => [([$env.HOME, .config, zed, settings.json] | path join), /home/vjftw/.var/app/dev.zed.Zed/config/zed/settings.json],
+        "linux" => [
+            ([$env.HOME, .config, zed, settings.json] | path join),
+            ([$env.HOME, .var, app, dev.zed.Zed, config, zed, settings.json] | path join),
+        ],
         "windows" => [([$env.APPDATA, Roaming, Zed, settings.json] | path join)],
         "darwin" => [([$env.HOME, .zed, settings.json] | path join)],
     }
+
+    let mise_shims_dir = mise shim_dir
 
     for settings_path in $settings_paths {
         if not ($settings_path | path exists) {
@@ -30,7 +36,12 @@ export def bootstrap [ ] {
         upsert "terminal" {
             "copy_on_select": true,
             "cursor_shape": 'bar',
-            "shell": 'system',
+            "shell": {
+                "with_arguments": {
+                    "program": ([$mise_shims_dir, nu] | path join),
+                    "args": ["--login"],
+                }
+            },
             "toolbar": {
                 "breadcrumbs": false,
             }
