@@ -13,5 +13,7 @@ git bootstrap
 carapace bootstrap
 oh-my-posh bootstrap
 
+log info "Upgrading tools..."
+mise upgrade --yes --bump
 log info "Pruning old tools..."
 mise prune --yes
