@@ -12,3 +12,6 @@ hx bootstrap
 git bootstrap
 carapace bootstrap
 oh-my-posh bootstrap
+
+log info "Pruning old tools..."
+mise prune --yes
