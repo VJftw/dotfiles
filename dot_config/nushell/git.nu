@@ -1,4 +1,5 @@
 use std log
+use mise.nu
 
 def local_git_config [] {
     return ([$env.HOME, .local.gitconfig] | path join)
@@ -17,7 +18,11 @@ export def ensure_local_gitconfig_property [property: string] {
 }
 
 export def setup_git_oauth_credential_helper [ ] {
-    mise use --global github:hickford/git-credential-oauth
+    mise write_conf_d "git-credential-oauth" {
+        tools: {
+            "github:hickford/git-credential-oauth": "latest"
+        },
+    }
 
     let localGitConfig = local_git_config
     if (^git config -f ($localGitConfig) --get-all credential.helper | complete | get stdout | lines -s | where $it == "oauth" | is-empty) {

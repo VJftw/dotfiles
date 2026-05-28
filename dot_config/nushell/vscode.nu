@@ -2,6 +2,21 @@ use std log
 use mise.nu
 
 export def bootstrap [ ] {
+    mise write_conf_d "vscode" {
+        tools: {
+            "http:vscode": {
+                version: "latest",
+                url: "https://update.code.visualstudio.com/{{ version }}/linux-x64/stable",
+                format: "tar.gz",
+                version_list_url: "https://api.github.com/repos/microsoft/vscode/releases?per_page=1",
+                version_json_path: ".[].tag_name",
+            },
+        },
+        tool_alias: {
+            vscode: "http:vscode"
+        }
+    }
+
     let shim_dir = mise shim_dir
     for settings_path in (settings_paths) {
         if not ($settings_path | path exists) {

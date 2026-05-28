@@ -2,9 +2,14 @@ use std log
 use mise.nu
 
 export def bootstrap [ ] {
-    ^mise use --global github:zed-industries/zed
-    ^mise tool-alias set zed github:zed-industries/zed
-
+    mise write_conf_d "zed" {
+        tools: {
+            "github:zed-industries/zed" : "latest"
+        },
+        tool_alias: {
+            zed: "github:zed-industries/zed"
+        }
+    }
 
     let settings_paths = match $nu.os-info.name {
         "linux" => [
