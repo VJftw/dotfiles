@@ -25,18 +25,19 @@ export def bootstrap [ ] {
         }
 
         open $settings_path |
+        upsert "chat.titleBar.signIn.enabled" false |
         upsert "editor.codeLens" true |
         upsert "editor.fontLigatures" true |
+        upsert "editor.fontFamily" "'Fira Code', 'Droid Sans Mono', monospace" |
         upsert "editor.formatOnSave" true |
         upsert "editor.rulers" [80, 120] |
         upsert "files.insertFinalNewline" true |
         upsert "files.trimFinalNewlines" true |
         upsert "files.trimTrailingWhitespace" true |
-        upsert "gitlens.rebaseEditor.openOnPausedRebase" false |
         upsert "terminal.integrated.cursorBlinking" true |
         upsert "terminal.integrated.cursorStyle" "line" |
         upsert "terminal.integrated.defaultProfile.linux" "nushell (login)" |
-        upsert "terminal.integrated.fontFamily" "'SauceCodePro Nerd Font Mono', SauceCodePro, 'SauceCodePro Nerd Font', 'SauceCodePro NF', Consolas, 'Courier New', monospace" |
+        upsert "terminal.integrated.fontFamily" "'Fira Code', 'Symbols Nerd Font Mono', Consolas, 'Courier New', monospace" |
         upsert "terminal.integrated.fontLigatures.enabled" true |
         upsert "terminal.integrated.localEchoLatencyThreshold" (-1) |
         upsert "terminal.integrated.profiles.linux"."nushell (login)" {'path': ([$shim_dir, nu] | path join),'args': ['--login']} |
@@ -45,12 +46,27 @@ export def bootstrap [ ] {
         upsert "terminal.integrated.shellIntegration.history" 0 |
         upsert "terminal.integrated.shellIntegration.quickFixEnabled" false |
         upsert "terminal.integrated.shellIntegration.showCommandGuide" false |
+        upsert "window.autoDetectColorScheme" true |
         upsert "workbench.iconTheme" "vscode-icons" |
         upsert "workbench.secondarySideBar.defaultVisibility" "hidden" |
         save --force $settings_path
 
         log info $'updated ($settings_path)'
     }
+
+    install_extensions [
+        "thenuprojectcontributors.vscode-nushell-lang",
+        "mk12.better-git-line-blame",
+        "ms-vscode.remote-explorer",
+        "ms-vscode-remote.remote-ssh",
+        "ms-azuretools.vscode-docker",
+        "redhat.vscode-yaml",
+        "vscode-icons-team.vscode-icons",
+        "golang.go",
+        "editorconfig.editorconfig",
+        "hashicorp.terraform",
+        "bazelbuild.vscode-bazel",
+    ]
 
 }
 
@@ -72,6 +88,15 @@ def settings_paths [ ]: nothing -> list {
         return [
             ([$env.HOME, Library, "Application Support", Code, User, settings.json] | path join) # Mac
         ]
+    }
+}
+
+def install_extensions [ extensions : list ] {
+    let shim_dir = mise shim_dir
+    let codeBin = ([ $shim_dir, code ] | path join)
+
+    for extension in $extensions {
+        mise exec "http:vscode" [code, --install-extension, $extension]
     }
 }
 

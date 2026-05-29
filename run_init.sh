@@ -6,6 +6,8 @@ export PATH="$binPath:$PATH"
 
 if ! command -v mise >/dev/null 2>&1; then
   curl https://mise.run | MISE_INSTALL_PATH="$binPath/mise" sh
+else
+  mise self-update
 fi
 
 mise use --global github:nushell/nushell

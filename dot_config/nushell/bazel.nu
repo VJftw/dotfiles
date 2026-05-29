@@ -1,5 +1,6 @@
 use std log
 use mise.nu
+use nu.nu
 
 export def install_buildifier [ ] {
     mise write_conf_d "buildifier" {
@@ -16,8 +17,14 @@ export def install_bazelisk [ ] {
         },
     }
 
-	const vendor_autoload_path = path self ([vendor, autoload, bazel.nu] | path join)
-    cp ($vendor_autoload_path) ([$nu.data-dir, vendor, autoload, bazel.nu] | path join)
+    "
+@complete external
+def --wrapped bazel [ ...rest ] {
+  ^bazelisk ...$rest
+}
+
+alias bzl = bazel
+" | nu save_vendor_autoload bazel
 }
 
 export def bootstrap [] {

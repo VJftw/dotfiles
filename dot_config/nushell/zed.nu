@@ -82,14 +82,6 @@ export def bootstrap [ ] {
 
         log info $'updated ($settings_path)'
     }
-
-    try {
-        ^flatpak --version | complete | ignore
-        const vendor_autoload_path = path self ([vendor, autoload, flatpak-zed.nu] | path join)
-        cp ($vendor_autoload_path) ([$nu.data-dir, vendor, autoload, flatpak-zed.nu] | path join)
-    } catch {
-        log info 'skipping flatpak alias'
-    }
 }
 
 def main [] {

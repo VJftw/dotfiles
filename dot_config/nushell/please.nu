@@ -1,5 +1,6 @@
 use std log
 use mise.nu
+use nu.nu
 
 export def bootstrap [] {
     mise write_conf_d "please" {
@@ -8,8 +9,13 @@ export def bootstrap [] {
         },
     }
 
-    const vendor_autoload_path = path self ([vendor, autoload, please.nu] | path join)
-    cp ($vendor_autoload_path) ([$nu.data-dir, vendor, autoload, please.nu] | path join)
+    "@complete external
+def --wrapped plz [...rest] {
+  ^plz ...$rest
+}
+
+alias please = plz
+" | nu save_vendor_autoload please
 }
 
 def main [] {

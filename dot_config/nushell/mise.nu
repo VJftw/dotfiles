@@ -7,8 +7,17 @@ export def shim_dir []: nothing -> string {
 }
 
 export def write_conf_d [ name: string, obj: record ] {
-    let user_conf_d = [ $env.HOME, .config, mise, conf.d ] | path join
-    mkdir $user_conf_d
+    let userConfDDir = [ $env.HOME, .config, mise, conf.d ] | path join
+    mkdir $userConfDDir
 
-    $obj | to toml | save -f ([ $user_conf_d, $"($name).toml" ] | path join)
+    let userConfDPath = [ $userConfDDir, $"($name).toml" ] | path join
+
+    $obj | to toml | save -f $userConfDPath
+
+    log info $"wrote ($userConfDPath)"
+    ^mise upgrade $name
+}
+
+export def exec [tool: string, args: list] {
+    ^mise exec $tool -- ...$args
 }
