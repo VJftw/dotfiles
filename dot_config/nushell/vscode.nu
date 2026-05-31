@@ -66,6 +66,7 @@ export def bootstrap [ ] {
         "editorconfig.editorconfig",
         "hashicorp.terraform",
         "bazelbuild.vscode-bazel",
+        "bufbuild.vscode-buf",
     ]
 
 }
