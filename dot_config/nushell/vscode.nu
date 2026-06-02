@@ -28,7 +28,7 @@ export def bootstrap [ ] {
         upsert "chat.titleBar.signIn.enabled" false |
         upsert "editor.codeLens" true |
         upsert "editor.fontLigatures" true |
-        upsert "editor.fontFamily" "'Fira Code', 'Droid Sans Mono', monospace" |
+        upsert "editor.fontFamily" "Lilex, 'Symbols Nerd Font Mono', 'Droid Sans Mono', monospace" |
         upsert "editor.formatOnSave" true |
         upsert "editor.rulers" [80, 120] |
         upsert "files.insertFinalNewline" true |
@@ -37,7 +37,7 @@ export def bootstrap [ ] {
         upsert "terminal.integrated.cursorBlinking" true |
         upsert "terminal.integrated.cursorStyle" "line" |
         upsert "terminal.integrated.defaultProfile.linux" "nushell (login)" |
-        upsert "terminal.integrated.fontFamily" "'Fira Code', 'Symbols Nerd Font Mono', Consolas, 'Courier New', monospace" |
+        upsert "terminal.integrated.fontFamily" "Lilex, 'Symbols Nerd Font Mono', Consolas, 'Courier New', monospace" |
         upsert "terminal.integrated.fontLigatures.enabled" true |
         upsert "terminal.integrated.localEchoLatencyThreshold" (-1) |
         upsert "terminal.integrated.profiles.linux"."nushell (login)" {'path': ([$shim_dir, nu] | path join),'args': ['--login']} |

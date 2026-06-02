@@ -6,6 +6,14 @@ export def shim_dir []: nothing -> string {
     }
 }
 
+export def installs_dir []: nothing -> string {
+    match $nu.os-info.name {
+        "linux" => ([$env.HOME, .local, share, mise, installs] | path join),
+        "darwin" => ([$env.HOME, .local, share, mise, installs] | path join),
+        "windows" => ([$env.LOCALAPPDATA, mise, installs] | path join),
+    }
+}
+
 export def write_conf_d [ name: string, obj: record ] {
     let userConfDDir = [ $env.HOME, .config, mise, conf.d ] | path join
     mkdir $userConfDDir
