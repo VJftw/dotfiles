@@ -67,6 +67,7 @@ export def bootstrap [ ] {
         "hashicorp.terraform",
         "bazelbuild.vscode-bazel",
         "bufbuild.vscode-buf",
+        "jebbs.plantuml",
     ]
 
 }
