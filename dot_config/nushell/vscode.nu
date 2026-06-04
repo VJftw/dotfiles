@@ -68,6 +68,7 @@ export def bootstrap [ ] {
         "bazelbuild.vscode-bazel",
         "bufbuild.vscode-buf",
         "jebbs.plantuml",
+        "MermaidChart.vscode-mermaid-chart",
     ]
 
 }
