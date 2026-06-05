@@ -15,6 +15,9 @@ export def install_bazelisk [ ] {
         tools: {
             "bazelisk" : "latest"
         },
+        tool_alias: {
+            bazel: "bazelisk"
+        }
     }
 
     "
