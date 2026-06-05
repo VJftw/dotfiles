@@ -23,7 +23,10 @@ export def write_conf_d [ name: string, obj: record ] {
     $obj | to toml | save -f $userConfDPath
 
     log info $"wrote ($userConfDPath)"
-    ^mise upgrade $name
+
+    let toolName = ($obj | get tools | columns | first)
+    log info $"executing: mise upgrade ($toolName)"
+    ^mise upgrade $toolName
 }
 
 export def exec [tool: string, args: list] {

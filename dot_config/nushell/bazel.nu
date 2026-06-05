@@ -13,11 +13,11 @@ export def install_buildifier [ ] {
 export def install_bazelisk [ ] {
     mise write_conf_d "bazelisk" {
         tools: {
-            "bazelisk" : "latest"
+            "github:bazelbuild/bazelisk" : {
+                version: "latest",
+                "bin" : "bazel"
+            },
         },
-        tool_alias: {
-            bazel: "bazelisk"
-        }
     }
 
     "
