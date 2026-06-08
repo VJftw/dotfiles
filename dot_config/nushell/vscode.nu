@@ -49,6 +49,7 @@ export def bootstrap [ ] {
         upsert "window.autoDetectColorScheme" true |
         upsert "workbench.iconTheme" "vscode-icons" |
         upsert "workbench.secondarySideBar.defaultVisibility" "hidden" |
+        upsert "mermaidChart.showGenerateDiagramCodeLens" false |
         save --force $settings_path
 
         log info $'updated ($settings_path)'
