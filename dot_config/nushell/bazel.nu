@@ -23,7 +23,7 @@ export def install_bazelisk [ ] {
     "
 @complete external
 def --wrapped bazel [ ...rest ] {
-  ^bazelisk ...$rest
+  ^bazel ...$rest
 }
 
 alias bzl = bazel
