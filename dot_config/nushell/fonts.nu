@@ -1,4 +1,4 @@
-use std log
+use std/log
 use mise.nu
 
 export def bootstrap [ ] {

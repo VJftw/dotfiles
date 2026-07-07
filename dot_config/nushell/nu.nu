@@ -1,4 +1,4 @@
-use std log
+use std/log
 
 export def save_vendor_autoload [ name: string ] {
     let autoloadDir = [$nu.data-dir, vendor, autoload] | path join

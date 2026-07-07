@@ -1,4 +1,4 @@
-use std log
+use std/log
 use hx.nu
 use git.nu
 use carapace.nu

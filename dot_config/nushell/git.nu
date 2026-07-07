@@ -1,4 +1,4 @@
-use std log
+use std/log
 use mise.nu
 
 def local_git_config [] {

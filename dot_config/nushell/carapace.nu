@@ -1,4 +1,4 @@
-use std log
+use std/log
 use mise.nu
 use nu.nu
 
