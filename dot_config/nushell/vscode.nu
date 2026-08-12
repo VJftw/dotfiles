@@ -61,6 +61,7 @@ export def bootstrap [ ] {
         "ms-vscode-remote.remote-ssh",
         "ms-azuretools.vscode-docker",
         "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
         "vscode-icons-team.vscode-icons",
         "golang.go",
         "editorconfig.editorconfig",
