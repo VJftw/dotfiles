@@ -36,10 +36,13 @@ export def bootstrap [ ] {
         upsert "files.trimTrailingWhitespace" true |
         upsert "terminal.integrated.cursorBlinking" true |
         upsert "terminal.integrated.cursorStyle" "line" |
+        upsert "terminal.integrated.customGlyphs" false |
         upsert "terminal.integrated.defaultProfile.linux" "nushell (login)" |
         upsert "terminal.integrated.fontFamily" "Lilex, 'Symbols Nerd Font Mono', Consolas, 'Courier New', monospace" |
         upsert "terminal.integrated.fontLigatures.enabled" true |
+        upsert "terminal.integrated.gpuAcceleration" "on" |
         upsert "terminal.integrated.localEchoLatencyThreshold" (-1) |
+        upsert "terminal.integrated.minimumContrastRatio" 1 |
         upsert "terminal.integrated.profiles.linux"."nushell (login)" {'path': ([$shim_dir, nu] | path join),'args': ['--login']} |
         upsert "terminal.integrated.shellIntegration.decorationsEnabled" "never" |
         upsert "terminal.integrated.shellIntegration.enabled" false |
