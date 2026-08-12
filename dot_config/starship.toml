@@ -2,7 +2,7 @@
 
 format = """
 [](bg:p10k_white fg:p10k_black)[$os ](bg:p10k_white fg:p10k_black)\
-[](bg:p10k_black fg:p10k_white)[$username@$hostname](bg:p10k_black fg:p10k_grey)\
+[](bg:p10k_black fg:p10k_white)[$username@$hostname](bg:p10k_black fg:p10k_greywhite)\
 [](bg:p10k_blue fg:p10k_black)[$directory](bg:p10k_blue fg:p10k_white)\
 [](bg:p10k_grey fg:p10k_blue)[$git_branch$git_commit$git_status$git_state](bg:p10k_grey fg:p10k_white)\
 [](fg:p10k_grey)\
@@ -106,6 +106,7 @@ vimcmd_visual_symbol = '[❮](bold fg:p10k_yellow)'
 [palettes.powerlevel10k]
 p10k_black = "#000000"
 p10k_white = "#ffffff"
+p10k_greywhite = "#888888"
 p10k_red = "#d70000"
 p10k_blue = "#0087d7"
 p10k_grey = "#262626"
