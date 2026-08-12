@@ -1,0 +1,115 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](bg:p10k_white fg:p10k_black)[$os ](bg:p10k_white fg:p10k_black)\
+[](bg:p10k_black fg:p10k_white)[$username@$hostname](bg:p10k_black fg:p10k_grey)\
+[](bg:p10k_blue fg:p10k_black)[$directory](bg:p10k_blue fg:p10k_white)\
+[](bg:p10k_grey fg:p10k_blue)[$git_branch$git_commit$git_status$git_state](bg:p10k_grey fg:p10k_white)\
+[](fg:p10k_grey)\
+\
+$fill\
+\
+[](fg:p10k_black)[$status$cmd_duration](bg:p10k_black fg:p10k_white)\
+[](bg:p10k_black fg:p10k_purple)[ $time](bg:p10k_purple)\
+[](fg:p10k_purple)\
+\
+$line_break\
+$character
+"""
+
+palette = 'powerlevel10k'
+
+[fill]
+symbol = ' '
+
+[os]
+disabled = false
+format = "$symbol"
+[os.symbols]
+Bazzite = "\uF17C"
+
+[username]
+show_always = true
+style_user = "bg:p10k_black fg:p10k_yellow"
+style_root = "bg:p10k_black fg:p10k_white"
+format = '[$user]($style)'
+
+[hostname]
+disabled = false
+ssh_only = false
+format = '$hostname'
+
+[directory]
+format = "\uF115 $path"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+format = "$symbol $branch \\(\uE728 $remote_branch\\)"
+symbol = "\uF126"
+always_show_remote = true
+
+[git_status]
+style = "bg:p10k_grey"
+format = '($all_status|$ahead_behind)'
+conflicted = " \uE727 $count "
+untracked = " \uF059 $count "
+stashed = " \uF01C $count "
+modified = " \uF06A $count "
+staged = " \uF055 $count "
+renamed = ""
+deleted = ""
+typechanged = ""
+
+# shown by $ahead_behind
+ahead = " \uF01B $count "
+behind = " \uF01A $count "
+# diverged = "\u21E1\u21E3"
+diverged = ""
+# up_to_date = "✨"
+up_to_date = ""
+
+
+[git_state]
+format = '$state( $progress_current/$progress_total)'
+
+[status]
+disabled = false
+format = '$symbol'
+success_symbol = '✅'
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+format = " $duration"
+disabled = false
+show_notifications = true
+min_time_to_notify = 45000
+
+[time]
+disabled = false
+time_format = "%T"
+format = '$time 🕗'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:p10k_grey)'
+error_symbol = '[❯](bold fg:p10k_red)'
+vimcmd_symbol = '[❮](bold fg:p10k_grey)'
+vimcmd_replace_one_symbol = '[❮](bold fg:p10k_purple)'
+vimcmd_replace_symbol = '[❮](bold fg:p10k_purple)'
+vimcmd_visual_symbol = '[❮](bold fg:p10k_yellow)'
+
+[palettes.powerlevel10k]
+p10k_black = "#000000"
+p10k_white = "#ffffff"
+p10k_red = "#d70000"
+p10k_blue = "#0087d7"
+p10k_grey = "#262626"
+p10k_green = "#5fbb00"
+p10k_yellow = "#d7a000"
+p10k_orange = "#af5f00"
+p10k_purple = "#8700d7"
