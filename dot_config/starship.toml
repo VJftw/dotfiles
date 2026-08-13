@@ -1,11 +1,11 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[](bg:p10k_white fg:p10k_black)[$os ](bg:p10k_white fg:p10k_black)\
-[](bg:p10k_black fg:p10k_white)[$username@$hostname](bg:p10k_black fg:p10k_greywhite)\
+[ $os ](bg:p10k_grey fg:p10k_white)\
+[](bg:p10k_black fg:p10k_grey)[$username@$hostname](bg:p10k_black fg:p10k_greywhite)\
 [](bg:p10k_blue fg:p10k_black)[$directory](bg:p10k_blue fg:p10k_white)\
-[](bg:p10k_grey fg:p10k_blue)[$git_branch$git_commit$git_status$git_state](bg:p10k_grey fg:p10k_white)\
-[](fg:p10k_grey)\
+[](bg:p10k_green fg:p10k_blue)[$git_branch$git_commit$git_status$git_state](bg:p10k_green fg:p10k_black)\
+[](fg:p10k_green)\
 \
 $fill\
 \
@@ -41,8 +41,9 @@ format = '$hostname'
 
 [directory]
 format = "\uF115 $path"
-truncation_length = 3
+truncation_length = 5
 truncation_symbol = "…/"
+truncate_to_repo = true
 
 [git_branch]
 format = "$symbol $branch \\(\uE728 $remote_branch\\)"
@@ -105,7 +106,7 @@ vimcmd_visual_symbol = '[❮](bold fg:p10k_yellow)'
 
 [palettes.powerlevel10k]
 p10k_black = "#000000"
-p10k_white = "#ffffff"
+p10k_white = "#eeeeee"
 p10k_greywhite = "#888888"
 p10k_red = "#d70000"
 p10k_blue = "#0087d7"
