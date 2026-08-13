@@ -7,7 +7,7 @@ export PATH="$binPath:$PATH"
 if ! command -v mise >/dev/null 2>&1; then
   curl https://mise.run | MISE_INSTALL_PATH="$binPath/mise" sh
 else
-  mise self-update
+  mise self-update --yes || true # fail silently
 fi
 
 mise use --global github:nushell/nushell
@@ -17,4 +17,4 @@ mise exec nu -- nu --commands 'mkdir ([$nu.data-dir, vendor, autoload] | path jo
 mise exec nu -- nu --commands 'mise activate nu --shims | save --force ([$nu.data-dir, vendor, autoload, mise.nu] | path join)'
 mise exec nu -- nu ~/.config/nushell/bootstrap.nu
 
-printf 'Use\n\tmise exec nu -- nu\n'
+printf 'Use\n\t%s/mise exec nu -- nu\n' "$binPath"
