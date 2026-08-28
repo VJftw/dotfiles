@@ -34,6 +34,7 @@ export def bootstrap [ ] {
         upsert "files.insertFinalNewline" true |
         upsert "files.trimFinalNewlines" true |
         upsert "files.trimTrailingWhitespace" true |
+        upsert "remote.SSH.remoteServerListenOnSocket" true |
         upsert "terminal.integrated.cursorBlinking" true |
         upsert "terminal.integrated.cursorStyle" "line" |
         upsert "terminal.integrated.customGlyphs" false |
