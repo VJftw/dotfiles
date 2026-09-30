@@ -1,5 +1,6 @@
 use std/log
 use mise.nu
+use systemd.nu
 
 export def bootstrap [ ] {
     mise write_conf_d "vscode" {
@@ -14,6 +15,20 @@ export def bootstrap [ ] {
         },
         tool_alias: {
             vscode: "http:vscode"
+        }
+    }
+
+    let vscodeBin = [(mise shim_dir), code] | path join
+    let vscodeCliDataDir = [ $env.HOME, .vscode, cli ] | path join
+    mkdir $vscodeCliDataDir
+
+    systemd write_user_service "vscode-tunnel" {
+        Unit: {
+            Description: "Visual Studio Code Tunnel"
+        }
+        Service: {
+            Restart: "always"
+            ExecStart: $"($vscodeBin) \"--verbose\" \"--cli-data-dir\" ($vscodeCliDataDir) \"tunnel\" \"service\" \"internal-run\""
         }
     }
 
